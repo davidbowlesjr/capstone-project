@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQS - AWS Service</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="min-h-screen py-8">
+
+
+<div class="container mx-auto p-4 bg-white rounded-lg shadow-lg max-w-screen-lg">
+    <div class="container mx-auto text-center">
+        <div class="flex justify-between p-4 container mx-auto">
+            <a routerLink="/catalog" class="flex items-center text-red-900 hover:text-red-700 transition duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                
+            </a>
+    
+            <p class="text-4xl font-semibold text-center text-red-900 mb-8">Simple Queue Service</p>
+    
+            <a routerLink="/finance" class="flex items-center text-red-900 hover:text-red-700 transition duration-300">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+            </a>
+        </div>
+
+            <div class="container mx-auto p-1 bg-white rounded-lg max-w-screen-lg flex items-center">
+            <div class="w-1/3 p-4">
+                <img src="assets\Service_Icons\sqs.png" alt="SQS Icon" class="mx-auto mb-4 max-w-xs h-auto">
+            </div>
+
+            <div class="w-2/3 p-8 text-left">
+                <p class="text-gray-600 leading-7">
+                    Amazon Simple Queue Service (SQS) is a fully managed message queuing service offered by Amazon Web Services (AWS). It provides a scalable and reliable solution for decoupling the components of distributed applications, microservices, and serverless architectures.
+                </p>
+                <p class="text-gray-600 leading-7 mt-4">
+                    With SQS, you can easily send, store, and receive messages between different parts of your application, allowing them to work independently and asynchronously. SQS helps you improve the fault tolerance and resilience of your applications by isolating and managing the components separately.
+                </p>
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        <div *ngIf="showSuccessMessage" class="bg-green-200 text-green-800 py-2 px-4 rounded mt-4">
+            Successfully added to cart!
+        </div>
+    </div>
+
+     <!-- Continue Button: Only appears when submit button is clicked - (Routes to Finance page) -->
+     <div class="flex justify-center mt-4 space-x-4">
+        <button
+        *ngIf="showContinueButton"
+        type="button"
+        class="btn btn-primary btn-icon flex justify-center items-center px-4 py-2 bg-red-900 hover:bg-red-700 text-white
+        rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-300 ease-in-out"
+        routerLink = '/finance'
+        >
+        <span class="mr-1">Continue</span>
+        </button>
+    </div>
+
+
+    <div class="page-container mx-auto mt-8 p-4 bg-white rounded-lg">
+
+
+        <form [formGroup]="sqsForm" (ngSubmit)="onSubmit(sqsForm.value)">
+            <h2 class="text-lg text-red-900 font-semibold mb-4">Service Settings</h2>
+
+
+            <!-- Queue Name -->
+            <div class="mb-4">
+                <label for="queueName" class="block text-gray-700 font-semibold">Queue Name:</label>
+                <input type="text" id="queueName" formControlName="queueName"
+                       class="w-full p-2 border border-gray-300 rounded" required>
+                <div *ngIf="queueName?.invalid && (queueName?.dirty || queueName?.touched)"
+                     class="text-red-600 mt-1">
+                    *Queue Name is required.
+                </div>
+            </div>
+
+
+            <!-- Add Dead Letter Queue -->
+            <div class="mb-4">
+                <label for="addDeadLetterQueue" class="block text-gray-700 font-semibold">Add Dead Letter Queue:</label>
+                <select id="addDeadLetterQueue" formControlName="addDeadLetterQueue"
+                        class="w-full p-2 border border-gray-300 rounded" required>
+                    <option value="">-- Select --</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+                <div *ngIf="addDeadLetterQueue?.invalid && (addDeadLetterQueue?.dirty || addDeadLetterQueue?.touched)"
+                     class="text-red-600 mt-1">
+                    *Please select an option.
+                </div>
+            </div>
+
+
+            <!-- Data Transfer -->
+            <h2 class="text-lg text-red-900 font-semibold mb-4">Data Transfer</h2>
+
+
+            <!-- Standard Queue Requests -->
+            <div class="mb-4">
+                <label for="standardQueueRequests" class="block text-gray-700 font-semibold">Standard Queue Requests:</label>
+                <input type="text" id="standardQueueRequests" formControlName="standardQueueRequests"
+                       class="w-full p-2 border border-gray-300 rounded" required>
+                <div *ngIf="standardQueueRequests?.invalid && (standardQueueRequests?.dirty || standardQueueRequests?.touched)"
+                     class="text-red-600 mt-1">
+                    *Field is required.
+                </div>
+                <div *ngIf="standardQueueRequests?.errors?.['pattern']" class="text-red-600 mt-1">
+                    *Please enter a valid number.
+                </div>
+            </div>
+
+
+            <!-- FIFO Queue Requests -->
+            <div class="mb-4">
+                <label for="fifoQueueRequests" class="block text-gray-700 font-semibold">FIFO Queue Requests:</label>
+                <input type="text" id="fifoQueueRequests" formControlName="fifoQueueRequests"
+                       class="w-full p-2 border border-gray-300 rounded" required>
+                <div *ngIf="fifoQueueRequests?.invalid && (fifoQueueRequests?.dirty || fifoQueueRequests?.touched)"
+                     class="text-red-600 mt-1">
+                    *Field is required.
+                </div>
+                <div *ngIf="fifoQueueRequests?.errors?.['pattern']" class="text-red-600 mt-1">
+                    *Please enter a valid number.
+                </div>
+            </div>
+
+
+            <!-- Outbound Data Transfer Region -->
+            <div class="mb-4">
+                <label for="outboundDataTransferRegion" class="block text-gray-700 font-semibold">Outbound Data Transfer Region:</label>
+                <select id="outboundDataTransferRegion" formControlName="outboundDataTransferRegion"
+                        class="w-full p-2 border border-gray-300 rounded" required>
+                    <option value="">-- Select Region --</option>
+                    <option value="us-east-1">US East (N. Virginia)</option>
+                    <option value="us-east-2">US East (Ohio)</option>
+                    <option value="us-west-1">US West (N. California)</option>
+                    <option value="us-west-2">US West (Oregon)</option>
+                </select>
+                <div *ngIf="outboundDataTransferRegion?.invalid && (outboundDataTransferRegion?.dirty || outboundDataTransferRegion?.touched)"
+                     class="text-red-600 mt-1">
+                    *Please select a region.
+                </div>
+            </div>
+
+
+            <!-- Outbound Data Transfer Amount and Unit -->
+            <div class="mb-4 flex items-center">
+                <label for="outboundDataTransferAmount" class="block text-gray-700 font-semibold mr-2">Outbound Data Transfer Amount:</label>
+                <input type="text" id="outboundDataTransferAmount" formControlName="outboundDataTransferAmount"
+                       class="w-1/2 p-2 border border-gray-300 rounded" required>
+                <select id="outboundDataTransferUnit" formControlName="outboundDataTransferUnit"
+                        class="w-1/2 p-2 border border-gray-300 rounded ml-2" required>
+                    <option value="">-- Select Unit --</option>
+                    <option value="TB">TB per month</option>
+                    <option value="GB">GB per month</option>
+                </select>
+                <div *ngIf="outboundDataTransferAmount?.invalid && (outboundDataTransferAmount?.dirty || outboundDataTransferAmount?.touched)"
+                     class="text-red-600 mt-1 ml-2">
+                    *Field is required.
+                </div>
+                <div *ngIf="outboundDataTransferAmount?.errors?.['pattern']" class="text-red-600 mt-1 ml-2">
+                    *Please enter a valid number.
+                </div>
+            </div>
+
+            <!-- Button Container -->
+            <div class="flex justify-center mt-8 space-x-4">
+                <button type="submit" [disabled]="sqsForm.invalid" class="btn btn-primary btn-icon flex justify-center items-center px-4 py-2 bg-red-900 hover:bg-red-700 text-white 
+                    rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-300 ease-in-out">
+                  <span class="mr-1">Submit</span>
+            
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

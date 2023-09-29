@@ -1,0 +1,41 @@
+<!--<div class="content-container">
+    <div class="text-container">
+        <h1>Cloud Migration Assistant</h1>
+        <p>Helping you migrate your on-premise applications to the AWS Cloud</p>
+    </div>
+    <img src="assets/AWS.png" alt="Description of the image" id="awsImage">
+
+</div>
+<hr>
+-->
+<div class="bg-gradient-to-r from-red-900 to-red-800 text-white py-2 md:py-1">
+    <div class="container mx-auto flex items-center justify-between">
+        <div class="flex items-center">
+            <a href="/">
+                <img src="assets/cloud-icon-negate.png" alt="Cloud Icon" class="w-12 md:w-16 mr-2 p-3">
+            </a>
+            <div>
+                <a class="text-sm md:text-base py-2 md:py-1 font-medium">Cloud Migration Assistant</a>
+            </div>
+        </div>
+    
+        <!-- navbar -->
+        <nav class="flex space-x-4">
+            <a routerLink="/" class="text-white hover:underline text-xs md:text-base font-medium">Home</a>
+            <a routerLink="/catalog" class="text-white hover:underline text-xs md:text-base font-medium">Catalog</a>
+            <a routerLink="/finance" class="text-white hover:underline text-xs md:text-base font-medium">Cart</a>
+            <a routerLink="/cloudform" class="text-white hover:underline text-xs md:text-base font-medium">Template</a>
+            <a routerLink="/account" 
+               class="text-white hover:underline text-xs md:text-base font-medium"
+               *ngIf="loggedIn">My Account</a>  
+        </nav>
+    </div>
+</div>
+<hr>
+
+
+
+
+
+
+

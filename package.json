@@ -1,0 +1,18 @@
+{
+  "name": "lpp-2023-capstone-project",
+  "version": "1.0.0",
+  "description": "Build an application that can assist the product owners with their attempt to migrate on-premise applications to AWS Cloud.\r The Cloud Assistant should have:\r - UI screens using which the user can submit information about the existing application. For example:\r - Type of application (Web Application, REST API, Single Page Applications, Batch Jobs etc)\r - Tech stack (Java, Python, Angular, React, Databases etc)\r Other infrastructure dependencies (CDN, Message Queue, Cache, Identity Management etc)\r - Based on the information furnished (as above), the Cloud Assistant should outline the AWS services that are needed to migrate the on-premise application.\r - The Cloud Assistant should also offer insights on the approximate cost overhead (one-time and periodical) should the application is considered for migration to AWS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1463.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+}

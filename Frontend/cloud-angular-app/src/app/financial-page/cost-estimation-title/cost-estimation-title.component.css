@@ -1,0 +1,23 @@
+:host{
+    width: 80%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+p{
+    width: 80%;
+    margin: 0px auto;
+    padding: 10px; /* Spacing inside the box */
+    background-color: #fff; /* White background */
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+
+}
+
+h1{
+    width: 80%;
+    margin: 0% auto;
+    padding: 10px; /* Spacing inside the box */
+    background-color: #fff; /* White background */
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}

@@ -1,0 +1,129 @@
+{
+   "Lamdba": {
+        "Type" : "AWS::Lambda::Function",
+        "Properties": {
+            "Handler": "index.handler",
+            "Runtime": "" ,
+            "Role": "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+            "Code": {
+                "S3Bucket": "",
+                "S3Key": ""
+            }
+        }
+    },
+    
+    "S3": {
+        "Type" : "AWS::EC2::Instance",
+        "Properties" : {
+            "BucketName" : "my-unique-bucket-name"
+        }
+    },
+
+     "EC2": { 
+        "Type": "AWS::EC2::Instance", 
+        "Properties": { 
+            "InstanceType": "t2.micro", 
+            "ImageId": "ami-12345678", 
+            "KeyName": "my-key-pair", 
+            "SecurityGroups": ["my-security-group"] 
+            } 
+    },
+
+     "SES": {
+        "Type": "AWS::SES::ConfigurationSet",
+        "Properties": {
+            "Name": "MySESSampleConfigurationSet"
+        }
+    },
+
+   
+    "CloudWatchAlarm": {
+        "Type": "AWS::CloudWatch::Alarm",
+        "Properties": {
+            "AlarmName": "MyAlarm",
+            "ComparisonOperator": "GreaterThanThreshold",
+            "EvaluationPeriods": 1,
+            "Period": 300,
+            "Threshold": 70,
+            "AlarmActions": ["arn:aws:sns:us-east-1:123456789012:MySNSTopic"]
+        }
+    },
+
+    "DynamoDBTable": {
+        "Type": "AWS::DynamoDB::Table",
+        "Properties": {
+            "TableName": "MyTable",
+            "AttributeDefinitions": [
+            {
+                "AttributeName": "ID",
+                "AttributeType": "N"
+            }
+            ],
+            "KeySchema": [
+            {
+                "AttributeName": "ID",
+                "KeyType": "HASH"
+            }
+            ],
+            "ProvisionedThroughput": {
+            "ReadCapacityUnits": 5,
+            "WriteCapacityUnits": 5
+            }
+        }
+    },
+
+    "RDSInstance": {
+        "Type": "AWS::RDS::DBInstance",
+        "Properties": {
+          "Engine": "mysql",
+          "AllocatedStorage": 20,
+          "DBInstanceClass": "db.t2.micro",
+          "MasterUsername": "admin",
+          "MasterUserPassword": "pass"
+        }
+      },
+    
+      "VPC": {
+        "Type": "AWS::EC2::VPC",
+        "Properties": {
+          "CidrBlock": "10.0.0.0/16"
+        }
+      },
+
+      "SQS" : {
+        "Type" : "AWS::SQS::Queue",
+        "Properties" : {
+        "QueueName" : "SampleQueue",
+          "RedrivePolicy": {
+            "deadLetterTargetArn" : {"Fn::GetAtt" : [ "MyDeadLetterQueue" , "Arn" ]},
+            "maxReceiveCount" : 5
+          }
+        }
+      },    
+      "MyDeadLetterQueue" : {
+        "Type" : "AWS::SQS::Queue"
+      },
+
+      "SNS" : {
+        "Type" : "AWS::SNS::Topic",
+        "Properties" : {
+          "Subscription" : [{
+            "Endpoint" : "myEndpoint",
+            "Protocol" : "myprotocol"
+          }],
+          "TopicName" : "SampleTopic"
+        }
+    }
+}
+
+  
+
+
+
+  
+      
+      
+
+
+
+

@@ -1,0 +1,233 @@
+<div class="container">
+    <div class="form-container">
+        <h1>Dynamo DB</h1>
+        <img src="../../../assets/Service_Icons/DynamoDB.png" alt="DynamoDB.png">
+        <p>Fast and reliable NoSQL database service</p>
+        <div *ngIf="showSuccessMessage" class="success-message">
+            Successfully added to cart!
+        </div>
+        <!-- <div *ngIf="dynamoForm.invalid" class="error-message">
+            Please fill out all required fields before adding to cart.
+        </div> -->
+        <br>
+
+
+
+        <form [formGroup]="dynamoForm"> 
+            <!-- (ngSubmit)="onSubmit(dynamoForm.value)"> -->
+            
+                <mat-form-field appearance="outline">
+                    <mat-label for="tableName">Table Name:</mat-label>
+                    <input matInput placeholder="" type="text" name="tableName" formControlName="tableName">
+                </mat-form-field>
+                <br>
+
+                <mat-label for="AttributeDefinitions">Attribute Definitions:</mat-label>
+                <br>
+                <mat-form-field appearance="outline">
+                    <mat-label for="attributeDefinitionName">Attribute Name:</mat-label>
+                    <input matInput placeholder="" type="text" name="attributeDefinitionName" formControlName="attributeDefinitionName">
+                </mat-form-field><br>
+                
+                <!-- DROP DOWN -->
+                <mat-form-field appearance="outline">
+                    <mat-label for="attributeType">Attribute Type:</mat-label>
+                    <mat-select placeholder="Attribute Type" formControlName="attributeType">
+                        <mat-option *ngFor="let attributeType of attributeTypes" [value]="attributeType">{{attributeType}}</mat-option>
+                    </mat-select>
+                </mat-form-field><br>
+
+                <mat-label for="KeySchema">Key Schema:</mat-label>
+                <br>
+                <mat-form-field appearance="outline">
+                    <mat-label for="keySchemaAttributeName">Attribute Name:</mat-label>
+                    <input matInput placeholder="" type="text" name="keySchemaAttributeName" formControlName="keySchemaAttributeName">
+                </mat-form-field><br>
+                <mat-form-field appearance="outline">
+                    <mat-label for="keyType">Key Type:</mat-label>
+                    <mat-select placeholder="Key Type" formControlName="keyType">
+                        <mat-option *ngFor="let keyType of keyTypes" [value]="keyType">{{keyType}}</mat-option>
+                    </mat-select>
+                </mat-form-field><br>
+
+                <mat-label for="ProvisionedThroughput">Provisioned Throughput:</mat-label>
+                <br>
+                <mat-form-field appearance="outline">
+                    <mat-label for="readCapacityUnits">Read Capacity Units:</mat-label>
+                    <input matInput placeholder="" type="text" name="readCapacityUnits" formControlName="readCapacityUnits">
+                </mat-form-field><br>
+
+                <mat-form-field appearance="outline">
+                    <mat-label for="writeCapacityUnits">Write Capacity Units:</mat-label>
+                    <input matInput placeholder="" type="text" name="writeCapacityUnits" formControlName="writeCapacityUnits">
+                </mat-form-field><br>
+               
+                <label>Cost Estimation</label>
+                <br>
+                <mat-form-field appearance="outline">
+                    <mat-label for="region">Region:</mat-label>
+                    <mat-select placeholder="" formControlName="region">
+                        <mat-option *ngFor="let region of regions" [value]="region">{{region}}</mat-option>
+                    </mat-select>
+                </mat-form-field><br>
+
+                <label>Table Class:</label><br>
+                <mat-radio-group formControlName="tableClass">
+                    <mat-radio-button *ngFor="let class of classes" [value]="class"  >{{class}}</mat-radio-button>  
+                </mat-radio-group><br><br><br>
+
+                <label>Data Storage:</label><br>
+                <mat-form-field appearance="outline">
+                    <mat-label for="storageSize">Data Storage Size:</mat-label>
+                    <input matInput placeholder="" type="text" name="storageSize" formControlName="storageSize">
+                </mat-form-field><br>
+                <label>Units:</label><br>
+                <mat-radio-group formControlName="storageSizeUnit">
+                    <mat-radio-button *ngFor="let unit of avgStorageUnits " [value]="unit" >{{unit}}</mat-radio-button>  
+                </mat-radio-group><br>
+
+                <mat-form-field appearance="outline">
+                    <mat-label for="avgItemSize">Average item size:</mat-label>
+                    <input matInput placeholder="" type="text" name="avgItemSize" formControlName="avgItemSize">
+                </mat-form-field><br>
+                <label>Units:</label><br>
+                <mat-radio-group formControlName="avgItemSizeUnit">
+                    <mat-radio-button *ngFor="let unit of avgItemUnits " [value]="unit" >{{unit}}</mat-radio-button>  
+                </mat-radio-group><br><br><br>
+
+                <label>Write Settings</label><br><br>
+                <mat-form-field appearance="outline">
+                    <mat-label for="nonTransactionalWritePercent">Percentage of non-transactional writes: </mat-label>
+                    <input matInput placeholder="" type="text" name="nonTransactionalWritePercent" formControlName="nonTransactionalWritePercent">
+                </mat-form-field><br>
+
+                <mat-form-field appearance="outline">
+                    <mat-label for="transactionalWritePercent">Percentage of transactional writes: </mat-label>
+                    <input matInput placeholder="" type="text" name="transactionalWritePercent" formControlName="transactionalWritePercent">
+                </mat-form-field><br>
+
+                <mat-form-field appearance="outline">
+                    <mat-label for="baselineWriteRate">Baseline write rate: </mat-label>
+                    <input matInput placeholder="" type="text" name="baselineWriteRate" formControlName="baselineWriteRate">
+                </mat-form-field><br>
+
+               
+                <mat-form-field appearance="outline">
+                    <mat-label for="baselineWriteRateUnit">Units:</mat-label>
+                    <mat-select placeholder="" formControlName="baselineWriteRateUnit">
+                        <mat-option *ngFor="let unit of perSecond" [value]="unit">{{unit}}</mat-option>
+                    </mat-select>
+                </mat-form-field><br>
+
+                <mat-form-field appearance="outline">
+                    <mat-label for="peakWriteRate">Peak write rate:  </mat-label>
+                    <input matInput placeholder="" type="text" name="peakWriteRate" formControlName="peakWriteRate">
+                </mat-form-field><br>
+
+               
+                <mat-form-field appearance="outline">
+                    <mat-label for="peakWriteRateUnit">Units:</mat-label>
+                    <mat-select placeholder="" formControlName="peakWriteRateUnit">
+                        <mat-option *ngFor="let unit of perSecond" [value]="unit">{{unit}}</mat-option>
+                    </mat-select>
+                </mat-form-field><br>
+
+
+                <mat-form-field appearance="outline">
+                    <mat-label for="durationPeakWrite">Duration of peak write activity: </mat-label>
+                    <input matInput placeholder="" type="text" name="durationPeakWrite" formControlName="durationPeakWrite">
+                </mat-form-field><br>
+
+               
+                <mat-form-field appearance="outline">
+                    <mat-label for="durationPeakWriteUnit">Units:</mat-label>
+                    <mat-select placeholder="" formControlName="durationPeakWriteUnit">
+                        <mat-option *ngFor="let unit of perMonth" [value]="unit">{{unit}}</mat-option>
+                    </mat-select>
+                </mat-form-field><br>
+
+                <mat-form-field appearance="outline">
+                    <mat-label for="percentBaselineWriteCovered">Percentage of baseline writes covered by reserved capacity: </mat-label>
+                    <input matInput placeholder="" type="text" name="percentBaselineWriteCovered" formControlName="percentBaselineWriteCovered">
+                </mat-form-field><br>
+
+                <label>Write reserved capacity term:</label><br>
+                <mat-radio-group formControlName="writeReservedTerm">
+                    <mat-radio-button *ngFor="let year of years " [value]="year" >{{year}}</mat-radio-button>  
+                </mat-radio-group><br><br><br>
+
+
+                <label>Read Settings</label><br>
+                <mat-form-field appearance="outline">
+                    <mat-label for="eventuallyConsistentPercent">Eventually consistent percentage:</mat-label>
+                    <input matInput placeholder="" type="text" name="eventuallyConsistentPercent" formControlName="eventuallyConsistentPercent">
+                </mat-form-field><br>
+
+                <mat-form-field appearance="outline">
+                    <mat-label for="stronglyConsistentPercent">Strongly consistent percentage:</mat-label>
+                    <input matInput placeholder="" type="text" name="stronglyConsistentPercent" formControlName="stronglyConsistentPercent">
+                </mat-form-field><br>
+
+                <mat-form-field appearance="outline">
+                    <mat-label for="transactionPercent">Transactional percentage:</mat-label>
+                    <input matInput placeholder="" type="text" name="transactionPercent" formControlName="transactionPercent">
+                </mat-form-field><br>
+
+                <mat-form-field appearance="outline">
+                    <mat-label for="baselineReadRate">Baseline read rate:</mat-label>
+                    <input matInput placeholder="" type="text" name="baselineReadRate" formControlName="baselineReadRate">
+                </mat-form-field><br>
+
+                <mat-form-field appearance="outline">
+                    <mat-label for="baselineReadUnit">Units:</mat-label>
+                    <mat-select placeholder="" formControlName="baselineReadUnit">
+                        <mat-option *ngFor="let unit of perSecond" [value]="unit">{{unit}}</mat-option>
+                    </mat-select>
+                </mat-form-field><br>
+
+                <mat-form-field appearance="outline">
+                    <mat-label for="peakReadRate">Peak read rate:</mat-label>
+                    <input matInput placeholder="" type="text" name="peakReadRate" formControlName="peakReadRate">
+                </mat-form-field><br>
+
+                <mat-form-field appearance="outline">
+                    <mat-label for="peakReadUnit">Units:</mat-label>
+                    <mat-select placeholder="" formControlName="peakReadUnit">
+                        <mat-option *ngFor="let unit of perSecond" [value]="unit">{{unit}}</mat-option>
+                    </mat-select>
+                </mat-form-field><br>
+
+                <mat-form-field appearance="outline">
+                    <mat-label for="readPeakDuration">Duration of peak read activity:</mat-label>
+                    <input matInput placeholder="" type="text" name="readPeakDuration" formControlName="readPeakDuration">
+                </mat-form-field><br>
+
+                <mat-form-field appearance="outline">
+                    <mat-label for="readPeakDurationUnit">Units:</mat-label>
+                    <mat-select placeholder="" formControlName="readPeakDurationUnit">
+                        <mat-option *ngFor="let unit of perMonth" [value]="unit">{{unit}}</mat-option>
+                    </mat-select>
+                </mat-form-field><br>
+
+                <mat-form-field appearance="outline">
+                    <mat-label for="baselinePercentRead">Percentage of baseline reads covered by reserved capacity:</mat-label>
+                    <input matInput placeholder="" type="text" name="baselinePercentRead" formControlName="baselinePercentRead">
+                </mat-form-field><br>
+
+                <label>Read reserved capacity term:</label><br>
+                <mat-radio-group formControlName="readReservedCapacity">
+                    <mat-radio-button *ngFor="let year of years " [value]="year" >{{year}}</mat-radio-button>  
+                </mat-radio-group><br><br><br>
+
+
+
+
+            <button mat-raised-button color="primary"[disabled]="dynamoForm.invalid"
+            class="btn btn-primary" type="submit" (click)="onSubmit()">Add to Cart</button><br>
+            
+        </form>
+<br>
+        <button mat-raised-button color="secondary"routerLink="/catalog">Back: AWS Catalog</button>
+    </div>
+
+</div>

@@ -1,0 +1,63 @@
+<h1>SES Email Service</h1>
+<img src="assets\Service_Icons\ses.png" >
+<p>Amazon SES is a cloud email service provider that can integrate into any application for bulk email sending.</p>
+
+<div *ngIf="sesForm.invalid" class="error-message">
+    Please fill out all required fields before adding to cart.
+  </div>
+  
+  <div *ngIf="showSuccessMessage" class="success-message">
+    Successfully added to cart!
+  </div>
+<body>
+
+    <form [formGroup]="sesForm" (ngSubmit)="onSubmit(sesForm.value)">
+
+
+    <div class="container" >
+        <label id="break">Please input the name of your configuration set: </label>
+        <input type="text" formControlName="configurationSet">
+      </div>
+
+        <div class="container">
+          <div class="Name">
+        <label >Email messages from EC2: </label>
+        <input type="number" formControlName="emailMessages">
+          </div>
+          <div class="Name">
+        <label for="emailMessagesUnit"> Unit: </label>
+        <select id="emailMessagesUnit" formControlName="emailMessagesUnit">
+            
+            <option value="per day">per day</option>
+            <option value="per week">per week</option>
+            <option value="per month">per month</option>
+
+        </select>
+          </div>
+      </div>
+      <div class="container">
+        <div class="Name">
+      <label >Data sent from EC2: </label>
+      <input type="number" formControlName="dataSent">
+        </div>
+        <div class="Name">
+      <label for="dataSentUnit"> Unit: </label>
+      <select id="dataSentUnit" formControlName="dataSentUnit">
+          
+          <option value="GB per month">GB per month</option>
+
+      </select>
+        </div>
+    </div>
+    <div class="container" >
+      <label id="break">Number of dedicated IP(standard) addresses: </label>
+      <input type="number" formControlName="IPs">
+    </div>
+
+    <div class="button-container">
+        <button routerLink="/catalog">Back: AWS Catalog</button>
+        <button type="submit" [disabled]="sesForm.invalid">Add to Cart</button>
+      </div>
+
+</form>
+</body>

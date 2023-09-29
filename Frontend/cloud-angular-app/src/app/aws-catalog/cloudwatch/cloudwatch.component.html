@@ -1,0 +1,76 @@
+<h1>CloudWatch Alarm</h1>
+<img src="../../../assets/Service_Icons/cloudwatch.png" alt="CloudWatch.png">
+<p>Amazon CloudWatch Alarm is a monitoring service that allows users to monitor various metrics and set up alarms based on those metrics. These alarms can trigger notifications or automated actions when certain conditions are met.</p>
+<div *ngIf="showSuccessMessage" class="success-message">
+    Successfully added to cart!
+</div>
+<div *ngIf="cloudwatchForm.invalid" class="error-message">
+    Please fill out all required fields before adding to cart.
+</div>
+
+<div class="page-container">
+
+<form [formGroup]="cloudwatchForm" (ngSubmit)="onSubmit(cloudwatchForm.value)">
+        <div class="container">
+            <label for="">Region:</label>
+            <select name="" id="" formControlName="region">
+                <option value="us-east-1">US_EAST_1</option>
+                <option value="us-west-1">US_WEST_1</option>
+            </select>
+        </div>    
+        <div class="container">
+            <label for="">Please Enter Alarm Name:</label>
+            <input type="text" formControlName="alarmName">
+        </div> 
+        <div class="container">
+            <label for="">Please Select Comparison Operator: </label>
+            <select name="" id="" formControlName="comparisonOperator">
+                <option value="select">---Select---</option>
+                <option value="greaterThan">GreaterThanThreshold</option>
+                <option value="greaterThanOrEqualTo">GreaterThanOrEqualToThreshold</option>
+                <option value="lessThan">LessThanThreshold</option>
+                <option value="lessThanOrEqualTo">LessThanOrEqualToThreshold</option>
+            </select>
+    </div>
+    <div class="container">
+        <label for="">Number of Breaches to Trigger Alarm: </label>
+        <input type="number" formControlName="numberOfBreaches">
+    </div>
+    <div class="container">
+        <label for="">Number of Metrics: </label>
+        <input type="number" formControlName="numberOfMetrics">
+    </div>
+    <div class="container">
+        <label for="">Number of Standard Resolution Alarm Metrics:</label>
+        <input type="number" formControlName="standardResolution">
+    </div>
+    <div class="container">
+        <label for="">Number of High Resolution Alarm Metrics:</label>
+        <input type="number" formControlName="highResolution">
+    </div>
+    <div class="container">
+        <label for="">Number of Composite Alarms: </label>
+        <input type="number" formControlName="compositeAlarms">
+    </div>
+    <div class="container">
+        <label for="">Length of Evaluation Period (in Seconds):</label>
+        <input type="number" formControlName="evaluationPeriod">
+    </div> 
+    <div class="container">
+        <label for="">Threshhold Value For Alarm Condition:</label>
+        <input type="number" formControlName="threshold">
+    </div> 
+    <div class="container">
+        <label for="">Select an Alarm Action: </label>
+        <select name="" id="" formControlName="alarmAction">
+        <option value="default">---Select---</option>
+        <option value="arn:aws:sns:us-east-1:123456789012:MySNSTopic">arn:aws:sns:us-east-1:123456789012:MySNSTopic</option>
+        </select>
+    </div>
+    <div class="button-container">
+        <button routerLink="/catalog">Back: AWS Catalog</button>
+        <button type="submit" [disabled]="cloudwatchForm.invalid">Add to Cart</button>
+    </div>
+    </form>
+</div>
+

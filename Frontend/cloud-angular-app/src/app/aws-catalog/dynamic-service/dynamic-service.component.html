@@ -1,0 +1,108 @@
+<!-- Written By David Bowles -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{service.serviceName}}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen py-8">
+
+
+
+
+<div class="container mx-auto p-4 bg-white rounded-lg shadow-lg max-w-screen-lg">
+    <div class="container mx-auto text-center">
+        <div class="flex justify-between p-4 container mx-auto">
+            <a routerLink="/catalog" class="flex items-center text-red-900 hover:text-red-700 transition duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                
+            </a>
+    
+            <p class="text-4xl font-semibold text-center text-red-900 mb-8">{{service.serviceName}}</p>
+    
+            <a routerLink="/finance" class="flex items-center text-red-900 hover:text-red-700 transition duration-300">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+            </a>
+        </div>
+
+            <div class="container mx-auto p-1 bg-white rounded-lg max-w-screen-lg flex items-center">
+            <div class="w-1/3 p-4">
+                <img ngSrc="{{bucketUrl+service.serviceId+'.jpg'}}" alt="SQS Icon" class="mx-auto mb-4 max-w-xs h-auto">
+            </div>
+
+            <div class="w-2/3 p-8 text-left">
+                <p class="text-gray-600 leading-7">
+                    {{service.serviceDescription}}
+                </p>
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        <div *ngIf="showSuccessMessage" class="bg-green-200 text-green-800 py-2 px-4 rounded mt-4">
+            Successfully added to cart!
+        </div>
+    </div>
+
+
+    <div class="page-container mx-auto mt-8 p-4 bg-white rounded-lg shadow-lg">
+
+        
+        <form >
+
+            <div *ngFor="let rescource of service.rescoucesWtihQuestions; let i = index">
+                <h2 class="text-lg text-red-900 font-semibold mb-4">Rescource: {{rescource.rescourceName}}</h2>
+
+                    <div *ngFor="let serviceParam of rescource.rescourceParams; let i = index">
+                    <!-- String Question -->
+                        <div *ngIf="serviceParam.hasQuestion && serviceParam.type === 'String'" class="mb-4">
+                            <label for="queueName" class="block text-gray-700 font-semibold">{{serviceParam.question}}:</label>
+                            <input type="text" id="queueName" [(ngModel)]="serviceParam.userInput" name="ngModel"
+                                class="w-full p-2 border border-gray-300 rounded" required>
+                        </div>
+
+                    <!-- Integer Question -->
+                        <div *ngIf="serviceParam.hasQuestion && serviceParam.type === 'Integer'" class="mb-4">
+                            <label for="queueName" class="block text-gray-700 font-semibold">{{serviceParam.question}}:</label>
+                            <input type="number" id="queueName" [(ngModel)]="serviceParam.userInput" name="ngModel"
+                                class="w-full p-2 border border-gray-300 rounded" required>
+                            </div>
+
+                    <!-- Value Select Question -->
+                    <!-- TODO: VALIDATION CHECKING -->
+                    <div *ngIf="serviceParam.hasQuestion && serviceParam.type === 'ValueList'" class="mb-4">
+                        <label for="queueName" class="block text-gray-700 font-semibold">{{serviceParam.question}}:</label>
+                            <select [(ngModel)]="serviceParam.userInput" name="values" class="w-full p-2 border border-gray-300 rounded">
+                                <option *ngFor="let value of serviceParam.defaultValue">
+                                    {{value.inputValue}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    
+            </div>
+
+
+
+            <!-- Button Container -->
+            <div class="flex justify-center mt-8 space-x-4">
+                <button (click)="onSubmit()" type="submit"  class="btn btn-primary btn-icon flex justify-center items-center px-4 py-2 bg-red-900 hover:bg-red-700 text-white 
+                    rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-300 ease-in-out">
+                  <span class="mr-1">Submit</span>
+            
+                </button>
+            </div>
+              
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!--
+<h2>Hello, {{name}}!</h2>
+<div>
+    <h3>Your CloudFormation Templates</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Created On</th>
+                <th>Name</th>
+                <th>Monthly Cost</th>
+                <th>Annual Cost</th>
+                <th>Template Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let template of userTemplates | async; index as i">
+                <td>{{template.userTemplate.date | date}}</td>
+                <td>{{template.userTemplate.name}}</td>
+                <td>{{template.userTemplate.monthly_cost | pricing:'monthly' | currency}}</td>
+                <td>{{template.userTemplate.monthly_cost | pricing:'annual' | currency}}</td>
+                <td><a href="{{template.userTemplate.s3_bucket_dir | s3bucketLink}}">Download</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+-->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Estimate Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mx-auto p-6 shadow-lg mt-8">
+        <div class="container mx-auto text-center">
+            <div class="flex justify-between p-4 container mx-auto">
+                <a routerLink="/catalog" class="flex items-center text-red-900 hover:text-red-700 transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                </a>
+
+
+                <p class="text-4xl font-semibold text-center text-red-800 mb-8">Hello, {{name}}!</p>
+       
+                <a routerLink="/cloudform" class="flex items-center text-red-900 hover:text-red-700 transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <p class="text-md font-semibold text-center text-gray-400 mb-8">View information about your CloudFormation Templates.</p>
+
+        <div class="overflow-x-auto">
+            <table class="table-auto w-full mx-auto border rounded-lg shadow-md">
+                <thead>
+                    <tr>
+                        <th class="py-4 px-6 bg-gray-200 text-lg font-bold ">Created On</th>
+                        <th class="py-4 px-6 bg-gray-200 text-lg font-bold ">Name</th>
+                        <th class="py-4 px-6 bg-gray-200 text-lg font-bold ">Monthly Cost</th>
+                        <th class="py-4 px-6 bg-gray-200 text-lg font-bold ">Annual Cost</th>
+                        <th class="py-4 px-6 bg-gray-200 text-lg font-bold ">Template Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let template of userTemplates | async; index as i" class="hover:bg-gray-100">
+                        <td class="px-11 py-6 text-lg font-semibold text-red-900 text-center border-b-2">{{template.userTemplate.date | date}}</td>
+                        <td class="px-11 py-6 text-lg font-semibold text-red-900 text-center border-b-2">{{template.userTemplate.name}}</td>
+                        <td class="px-11 py-6 text-lg font-semibold text-red-900 text-center border-b-2">{{template.userTemplate.monthly_cost | pricing:'monthly' | currency}}</td>
+                        <td class="px-11 py-6 text-lg font-semibold text-red-900 text-center border-b-2">{{template.userTemplate.monthly_cost | pricing:'annual' | currency}}</td>
+                        <td class="px-11 py-6 text-lg font-semibold text-red-900 text-center border-b-2"><a href="{{template.userTemplate.s3_bucket_dir | s3bucketLink}}" class="text-blue-600 hover:underline">Download</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+

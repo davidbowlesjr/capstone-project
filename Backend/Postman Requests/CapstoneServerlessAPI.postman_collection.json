@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "97a46dac-c31e-4cb0-8f57-316236084683",
+		"name": "CapstoneServerlessAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11789783"
+	},
+	"item": [
+		{
+			"name": "validate-template",
+			"item": [
+				{
+					"name": "/validate-template",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/validate-template",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"validate-template"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/validate-template",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"validate-template"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "ServiceCrud",
+			"item": [
+				{
+					"name": "SaveService",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"service\":{\r\n        \"serviceObject\": [{\"name\":\"DavidTestEC2\",\"serviceType\":\"AWS::EC2::Instance\",\"service\":[{\"key\":\"AvailabilityZone\",\"hasQuestion\":true,\"questionType\":\"String Input\",\"question\":\"What Availability Zone?\",\"type\":\"String\",\"defaultValue\":\"us-east-1a\"}]}]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://8yskqsdgyf.execute-api.us-east-2.amazonaws.com/dev/service",
+							"protocol": "https",
+							"host": [
+								"8yskqsdgyf",
+								"execute-api",
+								"us-east-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"service"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteService",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"id\":\"660c594a-df18-41cb-8d61-e1654b90815f\"}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://8yskqsdgyf.execute-api.us-east-2.amazonaws.com/dev/service",
+							"protocol": "https",
+							"host": [
+								"8yskqsdgyf",
+								"execute-api",
+								"us-east-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"service"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetServices",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://8yskqsdgyf.execute-api.us-east-2.amazonaws.com/dev/service",
+							"protocol": "https",
+							"host": [
+								"8yskqsdgyf",
+								"execute-api",
+								"us-east-2",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"service"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://8yskqsdgyf.execute-api.us-east-2.amazonaws.com/ValidateTemplate"
+		}
+	]
+}

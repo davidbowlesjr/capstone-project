@@ -1,0 +1,243 @@
+{
+	"info": {
+		"_postman_id": "c68a1e10-abf2-4a08-86f3-0ccd32dff361",
+		"name": "Capstone Postman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11789783"
+	},
+	"item": [
+		{
+			"name": "S3 Template",
+			"item": [
+				{
+					"name": "Add Template",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 2,\r\n    \"monthlyCost\": \"1099\",\r\n    \"cloudFormationJson\":{\r\n    \"Resources\": {\r\n        \"RecordServiceS3Bucket\": {\r\n            \"Type\": \"AWS::S3::Bucket\",\r\n            \"DeletionPolicy\": \"Retain\",\r\n            \"Properties\": {\r\n                \"ReplicationConfiguration\": {\r\n                    \"Role\": {\r\n                        \"Fn::GetAtt\": [\r\n                            \"WorkItemBucketBackupRole\",\r\n                            \"Arn\"\r\n                        ]\r\n                    },\r\n                    \"Rules\": [\r\n                        {\r\n                            \"Destination\": {\r\n                                \"Bucket\": {\r\n                                    \"Fn::Join\": [\r\n                                        \"\",\r\n                                        [\r\n                                            \"arn:aws:s3:::\",\r\n                                            {\r\n                                                \"Fn::Join\": [\r\n                                                    \"-\",\r\n                                                    [\r\n                                                        {\r\n                                                            \"Ref\": \"AWS::Region\"\r\n                                                        },\r\n                                                        {\r\n                                                            \"Ref\": \"AWS::StackName\"\r\n                                                        },\r\n                                                        \"replicationbucket\"\r\n                                                    ]\r\n                                                ]\r\n                                            }\r\n                                        ]\r\n                                    ]\r\n                                },\r\n                                \"StorageClass\": \"STANDARD\"\r\n                            },\r\n                            \"Id\": \"Backup\",\r\n                            \"Prefix\": \"\",\r\n                            \"Status\": \"Enabled\"\r\n                        }\r\n                    ]\r\n                },\r\n                \"VersioningConfiguration\": {\r\n                    \"Status\": \"Enabled\"\r\n                }\r\n            }\r\n        },\r\n        \"WorkItemBucketBackupRole\": {\r\n            \"Type\": \"AWS::IAM::Role\",\r\n            \"Properties\": {\r\n                \"AssumeRolePolicyDocument\": {\r\n                    \"Statement\": [\r\n                        {\r\n                            \"Action\": [\r\n                                \"sts:AssumeRole\"\r\n                            ],\r\n                            \"Effect\": \"Allow\",\r\n                            \"Principal\": {\r\n                                \"Service\": [\r\n                                    \"s3.amazonaws.com\"\r\n                                ]\r\n                            }\r\n                        }\r\n                    ]\r\n                }\r\n            }\r\n        },\r\n        \"BucketBackupPolicy\": {\r\n            \"Type\": \"AWS::IAM::Policy\",\r\n            \"Properties\": {\r\n                \"PolicyDocument\": {\r\n                    \"Statement\": [\r\n                        {\r\n                            \"Action\": [\r\n                                \"s3:GetReplicationConfiguration\",\r\n                                \"s3:ListBucket\"\r\n                            ],\r\n                            \"Effect\": \"Allow\",\r\n                            \"Resource\": [\r\n                                {\r\n                                    \"Fn::Join\": [\r\n                                        \"\",\r\n                                        [\r\n                                            \"arn:aws:s3:::\",\r\n                                            {\r\n                                                \"Ref\": \"RecordServiceS3Bucket\"\r\n                                            }\r\n                                        ]\r\n                                    ]\r\n                                }\r\n                            ]\r\n                        },\r\n                        {\r\n                            \"Action\": [\r\n                                \"s3:GetObjectVersion\",\r\n                                \"s3:GetObjectVersionAcl\"\r\n                            ],\r\n                            \"Effect\": \"Allow\",\r\n                            \"Resource\": [\r\n                                {\r\n                                    \"Fn::Join\": [\r\n                                        \"\",\r\n                                        [\r\n                                            \"arn:aws:s3:::\",\r\n                                            {\r\n                                                \"Ref\": \"RecordServiceS3Bucket\"\r\n                                            },\r\n                                            \"/*\"\r\n                                        ]\r\n                                    ]\r\n                                }\r\n                            ]\r\n                        },\r\n                        {\r\n                            \"Action\": [\r\n                                \"s3:ReplicateObject\",\r\n                                \"s3:ReplicateDelete\"\r\n                            ],\r\n                            \"Effect\": \"Allow\",\r\n                            \"Resource\": [\r\n                                {\r\n                                    \"Fn::Join\": [\r\n                                        \"\",\r\n                                        [\r\n                                            \"arn:aws:s3:::\",\r\n                                            {\r\n                                                \"Fn::Join\": [\r\n                                                    \"-\",\r\n                                                    [\r\n                                                        {\r\n                                                            \"Ref\": \"AWS::Region\"\r\n                                                        },\r\n                                                        {\r\n                                                            \"Ref\": \"AWS::StackName\"\r\n                                                        },\r\n                                                        \"replicationbucket\"\r\n                                                    ]\r\n                                                ]\r\n                                            },\r\n                                            \"/*\"\r\n                                        ]\r\n                                    ]\r\n                                }\r\n                            ]\r\n                        }\r\n                    ]\r\n                },\r\n                \"PolicyName\": \"BucketBackupPolicy\",\r\n                \"Roles\": [\r\n                    {\r\n                        \"Ref\": \"WorkItemBucketBackupRole\"\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n    }\r\n}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cloud-template-s3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-template-s3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Template",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cloud-template-s3?userId=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-template-s3"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Template",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"templateId\": 11,\r\n    \"monthlyCost\": \"12199\",\r\n    \"cloudFormationJson\":{\r\n    \"Resources\": {\r\n        \"RecordServiceS3Bucket\": {\r\n            \"Type\": \"AWS::S3::Bucke\",\r\n            \"DeletionPolicy\": \"Retain\",\r\n            \"Properties\": {\r\n                \"ReplicationConfiguration\": {\r\n                    \"Role\": {\r\n                        \"Fn::GetAtt\": [\r\n                            \"WorkItemBucketBackupRole\",\r\n                            \"Arn\"\r\n                        ]\r\n                    },\r\n                    \"Rules\": [\r\n                        {\r\n                            \"Destination\": {\r\n                                \"Bucket\": {\r\n                                    \"Fn::Join\": [\r\n                                        \"\",\r\n                                        [\r\n                                            \"arn:aws:s3:::\",\r\n                                            {\r\n                                                \"Fn::Join\": [\r\n                                                    \"-\",\r\n                                                    [\r\n                                                        {\r\n                                                            \"Ref\": \"AWS::Region\"\r\n                                                        },\r\n                                                        {\r\n                                                            \"Ref\": \"AWS::StackName\"\r\n                                                        },\r\n                                                        \"replicationbucket\"\r\n                                                    ]\r\n                                                ]\r\n                                            }\r\n                                        ]\r\n                                    ]\r\n                                },\r\n                                \"StorageClass\": \"STANDARD\"\r\n                            },\r\n                            \"Id\": \"Backup\",\r\n                            \"Prefix\": \"\",\r\n                            \"Status\": \"Enabled\"\r\n                        }\r\n                    ]\r\n                },\r\n                \"VersioningConfiguration\": {\r\n                    \"Status\": \"Enabled\"\r\n                }\r\n            }\r\n        },\r\n        \"WorkItemBucketBackupRole\": {\r\n            \"Type\": \"AWS::IAM::Role\",\r\n            \"Properties\": {\r\n                \"AssumeRolePolicyDocument\": {\r\n                    \"Statement\": [\r\n                        {\r\n                            \"Action\": [\r\n                                \"sts:AssumeRole\"\r\n                            ],\r\n                            \"Effect\": \"Allow\",\r\n                            \"Principal\": {\r\n                                \"Service\": [\r\n                                    \"s3.amazonaws.com\"\r\n                                ]\r\n                            }\r\n                        }\r\n                    ]\r\n                }\r\n            }\r\n        },\r\n        \"BucketBackupPolicy\": {\r\n            \"Type\": \"AWS::IAM::Policy\",\r\n            \"Properties\": {\r\n                \"PolicyDocument\": {\r\n                    \"Statement\": [\r\n                        {\r\n                            \"Action\": [\r\n                                \"s3:GetReplicationConfiguration\",\r\n                                \"s3:ListBucket\"\r\n                            ],\r\n                            \"Effect\": \"Allow\",\r\n                            \"Resource\": [\r\n                                {\r\n                                    \"Fn::Join\": [\r\n                                        \"\",\r\n                                        [\r\n                                            \"arn:aws:s3:::\",\r\n                                            {\r\n                                                \"Ref\": \"RecordServiceS3Bucket\"\r\n                                            }\r\n                                        ]\r\n                                    ]\r\n                                }\r\n                            ]\r\n                        },\r\n                        {\r\n                            \"Action\": [\r\n                                \"s3:GetObjectVersion\",\r\n                                \"s3:GetObjectVersionAcl\"\r\n                            ],\r\n                            \"Effect\": \"Allow\",\r\n                            \"Resource\": [\r\n                                {\r\n                                    \"Fn::Join\": [\r\n                                        \"\",\r\n                                        [\r\n                                            \"arn:aws:s3:::\",\r\n                                            {\r\n                                                \"Ref\": \"RecordServiceS3Bucket\"\r\n                                            },\r\n                                            \"/*\"\r\n                                        ]\r\n                                    ]\r\n                                }\r\n                            ]\r\n                        },\r\n                        {\r\n                            \"Action\": [\r\n                                \"s3:ReplicateObject\",\r\n                                \"s3:ReplicateDelete\"\r\n                            ],\r\n                            \"Effect\": \"Allow\",\r\n                            \"Resource\": [\r\n                                {\r\n                                    \"Fn::Join\": [\r\n                                        \"\",\r\n                                        [\r\n                                            \"arn:aws:s3:::\",\r\n                                            {\r\n                                                \"Fn::Join\": [\r\n                                                    \"-\",\r\n                                                    [\r\n                                                        {\r\n                                                            \"Ref\": \"AWS::Region\"\r\n                                                        },\r\n                                                        {\r\n                                                            \"Ref\": \"AWS::StackName\"\r\n                                                        },\r\n                                                        \"replicationbucket\"\r\n                                                    ]\r\n                                                ]\r\n                                            },\r\n                                            \"/*\"\r\n                                        ]\r\n                                    ]\r\n                                }\r\n                            ]\r\n                        }\r\n                    ]\r\n                },\r\n                \"PolicyName\": \"BucketBackupPolicy\",\r\n                \"Roles\": [\r\n                    {\r\n                        \"Ref\": \"WorkItemBucketBackupRole\"\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n    }\r\n}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cloud-template-s3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-template-s3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Template by Template Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/cloud-template-s3?templateId=11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-template-s3"
+							],
+							"query": [
+								{
+									"key": "templateId",
+									"value": "11"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login/Register",
+			"item": [
+				{
+					"name": "Register",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6dHJ1ZSwiaWF0IjoxNjkzMjUwOTMzLCJqdGkiOiJlNDVkZjJiNi0xYjA1LTQ0Y2QtYjc4MS01YTFlMjcxMDE4NGEiLCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoxLCJuYmYiOjE2OTMyNTA5MzMsImV4cCI6MTY5MzI1MTgzMywiaXNfYWRtaW4iOnRydWV9.JhW6xnvDmTFr7FdtYC0ivn6XSbrX3kqrH0rSkmmOK-Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRrbWFnZXNoNzdAZ21haWwuY29tIiwiaWF0IjoxNjkxNTkxMTE0LCJleHAiOjE2OTE1OTQ3MTQsInN1YiI6IjIifQ.zGeGY1d0k6fni8Edtc5xChDUy-6foIup31-7jHFOhQY",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"abc@gmail.com\",\r\n    \"password\": \"abc123\",\r\n    \"firstName\": \"David\",\r\n    \"lastName\": \"Bowles\",\r\n    \"orgName\":\"Lincoln\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"tkmageasdsh7d7@gmail.com\",\r\n    \"password\":\"asd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TemplateCostCalculator",
+			"item": [
+				{
+					"name": "CostCalculatorJSONTemplate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"serviceName\":\"EC2\",   \r\n\"cloudFormationJson\": {\r\n    \"Resources\": {\r\n        \"RecordServiceS3Bucket\": {\r\n            \"Type\": \"AWS::S3::Bucket\",\r\n            \"DeletionPolicy\": \"Retain\",\r\n            \"Properties\": {\r\n                \"ReplicationConfiguration\": {\r\n                    \"Role\": {\r\n                        \"Fn::GetAtt\": [\r\n                            \"WorkItemBucketBackupRole\",\r\n                            \"Arn\"\r\n                        ]\r\n                    },\r\n                    \"Rules\": [\r\n                        {\r\n                            \"Destination\": {\r\n                                \"Bucket\": {\r\n                                    \"Fn::Join\": [\r\n                                        \"\",\r\n                                        [\r\n                                            \"arn:aws:s3:::\",\r\n                                            {\r\n                                                \"Fn::Join\": [\r\n                                                    \"-\",\r\n                                                    [\r\n                                                        {\r\n                                                            \"Ref\": \"AWS::Region\"\r\n                                                        },\r\n                                                        {\r\n                                                            \"Ref\": \"AWS::StackName\"\r\n                                                        },\r\n                                                        \"replicationbucket\"\r\n                                                    ]\r\n                                                ]\r\n                                            }\r\n                                        ]\r\n                                    ]\r\n                                },\r\n                                \"StorageClass\": \"STANDARD\"\r\n                            },\r\n                            \"Id\": \"Backup\",\r\n                            \"Prefix\": \"\",\r\n                            \"Status\": \"Enabled\"\r\n                        }\r\n                    ]\r\n                },\r\n                \"VersioningConfiguration\": {\r\n                    \"Status\": \"Enabled\"\r\n                }\r\n            }\r\n        },\r\n        \"WorkItemBucketBackupRole\": {\r\n            \"Type\": \"AWS::IAM::Role\",\r\n            \"Properties\": {\r\n                \"AssumeRolePolicyDocument\": {\r\n                    \"Statement\": [\r\n                        {\r\n                            \"Action\": [\r\n                                \"sts:AssumeRole\"\r\n                            ],\r\n                            \"Effect\": \"Allow\",\r\n                            \"Principal\": {\r\n                                \"Service\": [\r\n                                    \"s3.amazonaws.com\"\r\n                                ]\r\n                            }\r\n                        }\r\n                    ]\r\n                }\r\n            }\r\n        },\r\n        \"BucketBackupPolicy\": {\r\n            \"Type\": \"AWS::IAM::Policy\",\r\n            \"Properties\": {\r\n                \"PolicyDocument\": {\r\n                    \"Statement\": [\r\n                        {\r\n                            \"Action\": [\r\n                                \"s3:GetReplicationConfiguration\",\r\n                                \"s3:ListBucket\"\r\n                            ],\r\n                            \"Effect\": \"Allow\",\r\n                            \"Resource\": [\r\n                                {\r\n                                    \"Fn::Join\": [\r\n                                        \"\",\r\n                                        [\r\n                                            \"arn:aws:s3:::\",\r\n                                            {\r\n                                                \"Ref\": \"RecordServiceS3Bucket\"\r\n                                            }\r\n                                        ]\r\n                                    ]\r\n                                }\r\n                            ]\r\n                        },\r\n                        {\r\n                            \"Action\": [\r\n                                \"s3:GetObjectVersion\",\r\n                                \"s3:GetObjectVersionAcl\"\r\n                            ],\r\n                            \"Effect\": \"Allow\",\r\n                            \"Resource\": [\r\n                                {\r\n                                    \"Fn::Join\": [\r\n                                        \"\",\r\n                                        [\r\n                                            \"arn:aws:s3:::\",\r\n                                            {\r\n                                                \"Ref\": \"RecordServiceS3Bucket\"\r\n                                            },\r\n                                            \"/*\"\r\n                                        ]\r\n                                    ]\r\n                                }\r\n                            ]\r\n                        },\r\n                        {\r\n                            \"Action\": [\r\n                                \"s3:ReplicateObject\",\r\n                                \"s3:ReplicateDelete\"\r\n                            ],\r\n                            \"Effect\": \"Allow\",\r\n                            \"Resource\": [\r\n                                {\r\n                                    \"Fn::Join\": [\r\n                                        \"\",\r\n                                        [\r\n                                            \"arn:aws:s3:::\",\r\n                                            {\r\n                                                \"Fn::Join\": [\r\n                                                    \"-\",\r\n                                                    [\r\n                                                        {\r\n                                                            \"Ref\": \"AWS::Region\"\r\n                                                        },\r\n                                                        {\r\n                                                            \"Ref\": \"AWS::StackName\"\r\n                                                        },\r\n                                                        \"replicationbucket\"\r\n                                                    ]\r\n                                                ]\r\n                                            },\r\n                                            \"/*\"\r\n                                        ]\r\n                                    ]\r\n                                }\r\n                            ]\r\n                        }\r\n                    ]\r\n                },\r\n                \"PolicyName\": \"BucketBackupPolicy\",\r\n                \"Roles\": [\r\n                    {\r\n                        \"Ref\": \"WorkItemBucketBackupRole\"\r\n                    }\r\n                ]\r\n            }\r\n        }\r\n    }\r\n}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/cloud-template-cost",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"cloud-template-cost"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CostURLTest",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

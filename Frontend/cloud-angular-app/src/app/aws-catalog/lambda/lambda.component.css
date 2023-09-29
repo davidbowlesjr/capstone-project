@@ -1,0 +1,182 @@
+h1 { 
+    font-family: sans-serif;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.container {
+    margin-bottom: 20px;
+}
+label {
+    font-weight: bold;
+}
+select {
+    width: 98.5%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input[type="text"],
+input[type="number"]
+{
+    width: 95%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.page-container {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #f5f5f5, #e0e0e0);
+}
+
+img {
+    display: block;
+    margin: 0 auto;
+    max-width: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    place-items: center;
+
+
+}
+
+p {
+    font-size: 16px;
+    font-family: sans-serif;
+    line-height: 1.6;
+    color: #444;
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+form {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    font-family: sans-serif;
+}
+
+
+/* ***************************************************
+/*                      BUTTONS                     */
+/* ***************************************************/
+input[type="radio"] {
+    display: none; /* Hide the default radio buttons */
+}
+.toggle-label {
+    display: inline-block;
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    line-height: 30px;
+    background-color: #f5f5f5;  /* Default background color for inactive state */
+    color: #333;  /* Default text color for inactive state */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* When MB is checked */
+input[id="memoryMB"]:checked + .toggle-label {
+    background-color: #e38c12;  /* Orange for MB */
+    color: #fff;
+}
+
+/* When GB is checked */
+input[id="memoryGB"]:checked + .toggle-label {
+    background-color: #e38c12;  /* Orange for GB */
+    color: #fff;
+}
+
+
+/* When storageGB is checked */
+input[id="storageGB"]:checked + .toggle-label {
+    background-color: #e38c12;  /* Orange for GB */
+    color: #fff;
+}
+
+/* When storageTB is checked */
+input[id="storageMB"]:checked + .toggle-label {
+    background-color: #e38c12;  /* Orange for TB */
+    color: #fff;
+}
+
+.toggle-container {
+    display: inline-block; /* Allows it to be on the same line as other elements */
+    position: relative;
+    width: 100px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    overflow: hidden; /* Hide overflowing radio buttons */
+}
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover:enabled { 
+    background-color: #0056b3;
+}
+.success-message {
+    font-family: sans-serif;
+    text-align: center;
+    background-color: #dff0d8;
+    color: #3c763d;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+    display: inline-block;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.error-message {
+    font-family: sans-serif;
+    color: #d9534f;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Adjust based on your preference */
+  }
+  
+
+button {
+    margin: 20px auto;
+    background-color: transparent;
+    display: block;
+    margin-top: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3 ease;
+}
+
+
+
+button.router-link:hover {
+    background-color: #0056b3;
+}
+

@@ -1,0 +1,111 @@
+<h1>RDS</h1>
+<img src="assets\Service_Icons\rds.png" alt="RDS Image" id="awsImage">
+<p>AWS Relational Database Service is a managed service that makes it easy to set up, operate, and scale a relational database in the cloud.</p>
+
+<div *ngIf="rdsForm.invalid" class="error-message">
+  Please fill out all required fields before adding to cart.
+</div>
+
+<div *ngIf="showSuccessMessage" class="success-message">
+  Successfully added to cart!
+</div>
+<div class="page-container">
+<form [formGroup]="rdsForm" (ngSubmit)="onSubmit(rdsForm.value)">
+
+  <div class ="container">
+    <label>Nodes : </label>
+    <input type="number" formControlName="nodes">
+  </div>
+
+  <div class ="container">
+    <label>Allocated Storage (GBs): </label>
+    <input type="number" formControlName="allocatedStorage">
+  </div>
+
+  <div class ="container">
+    <label>Engine:</label>
+    <select formControlName="engine">
+      <option value="postgres">postgres</option>
+    </select>
+  </div>
+
+  <div class="container">
+    <label>DB Instance Class:</label>
+    <select formControlName="dbInstanceClass">
+      <option value="" disabled selected></option>
+      <option *ngFor="let db of dbInstanceClasses">{{db}}</option>
+    </select>
+  </div>
+
+  <div class="container">
+    <label>Master Username:</label>
+    <input type="text" formControlName="masterUsername">
+  </div>
+
+  <div class="container">
+    <label>Master Password:</label>
+    <input type="text" formControlName="masterPassword">
+  </div>
+  
+    <!-- <div class ="container">
+      <label>Utilization:</label>
+      <input type="text" formControlName="utilizationValue">
+      <select formControlName="utilizationValue">
+        <option *ngFor="let util of utilizationTypes" [value]="util">{{util}}</option>
+      </select>
+    </div> -->
+  
+  
+    <div class ="container">
+      <label>Deployment Option:</label>
+      <select formControlName="deploymentOption">
+        <option value="Multi-AZ">Multi-AZ</option>
+        <option value="Single-AZ">Single-AZ</option>
+      </select>
+    </div>
+  
+  
+    <!-- <div class ="container">
+      <label>Storage Amount:</label>
+      <input type="number" formControlName="storageAmount">
+      <select formControlName="storageAmountUnit">
+        <option *ngFor="let unit of storageUnits" [value]="unit">{{unit}}</option>
+      </select>
+    </div> -->
+  
+  
+    <div class ="container">
+      <label>Retention Period for Performance Insights:</label>
+      <select formControlName="retentionPeriod">
+        <option *ngFor="let period of retentionPeriods" [value]="period">{{period}}</option>
+      </select>
+    </div>
+  
+  
+    <div class ="container">
+      <label>Additional Backup Storage:</label>
+      <input type="number" formControlName="additionalBackupStorage">
+      <select formControlName="additionalBackupStorageUnit">
+        <option *ngFor="let unit of storageUnits" [value]="unit">{{unit}}</option>
+      </select>
+    </div>
+  
+  
+    <div class ="container">
+      <label>Total Size of Backup Processed for Export (GB):</label>
+      <input type="number" formControlName="totalSizeBackup">
+      <select formControlName="backupPeriod">
+        <option value="per day">per day</option>
+        <option value="per week">per week</option>
+        <option value="per month">per month</option>
+      </select>
+    </div>
+  
+  
+    <div class="button-container">
+      <button routerLink="/catalog">Back: AWS Catalog</button>
+      <button type="submit" [disabled]="rdsForm.invalid">Add to Cart</button>
+    </div>
+  </form>
+  
+</div>

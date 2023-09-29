@@ -1,0 +1,106 @@
+
+<!-- *****OLD***** 
+    <table class="services-table">
+  <thead>
+      <tr>
+          <-- Input for searching services 
+          <th>
+              <input
+                  [(ngModel)]="searchTerm"
+                  placeholder="Search..."
+                  style="width: 80%; padding: 5px;">
+          </th>
+          <th> </th>
+          <th> </th>
+          <th><span class="addservice-btn" routerLink="/catalog">Add another Service</span></th>
+ 
+      </tr>
+      <-- Headers for column titles 
+      <tr>
+          <th>Service</th>
+          <th>Upfront cost</th>
+          <th>Monthly cost</th>
+          <th>Annual Cost</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let service of services | filter:searchTerm">
+          <td>{{ service.name }}</td>
+          <td>{{ service.upfrontCost }}</td>
+          <td>{{ service.monthlyCost }}</td>
+          <td>{{ service.annualCost }}</td>
+      </tr>
+  </tbody>
+</table>
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Estimate Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mx-auto p-6 shadow-lg mt-8">
+        <div class="container mx-auto text-center">
+            <div class="flex justify-between p-4 container mx-auto">
+                <a routerLink="/catalog" class="flex items-center text-red-900 hover:text-red-700 transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                </a>
+
+
+                <p class="text-4xl font-semibold text-center text-red-800 mb-8">Cost Estimation</p>
+       
+                <a routerLink="/cloudform" class="flex items-center text-red-900 hover:text-red-700 transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <p class="text-md font-semibold text-center text-gray-400 mb-8">These figures represent estimations and should only be used for education purposes.</p>
+        <app-estimate [services]="services" [upfront]="totalUpfrontCost" [monthly]="totalMonthlyCost" [annual]="totalAnnualCost"></app-estimate>
+        <div class="bg-white rounded-lg overflow-hidden">
+            <div class="p-6">
+                <input
+                    [(ngModel)]="searchTerm"
+                    class="w-full py-2 px-4 border border-gray-300 rounded-md"
+                    placeholder="Search..."
+                >
+            </div>
+            <table class="table-auto w-full mx-auto border rounded-lg shadow-md">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-3 text-lg font-bold bg-gray-200 border-b-2 border-gray-300">Service</th> 
+                        <th class="px-4 py-3 text-lg font-bold bg-gray-200 border-b-2 border-gray-300">Upfront Cost</th> 
+                        <th class="px-4 py-3 text-lg font-bold bg-gray-200 border-b-2 border-gray-300">Monthly Cost</th> 
+                        <th class="px-4 py-3 text-lg font-bold bg-gray-200 border-b-2 border-gray-300">Annual Cost</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let service of services | filter:searchTerm">
+                        <td class="px-11 py-6 text-lg font-semibold text-red-900 text-center border-b-2">{{ service.name }}</td>
+                        <td class="px-11 py-6 text-lg font-semibold text-red-900 text-center border-b-2">{{ service.upfrontCost }}</td>
+                        <td class="px-11 py-6 text-lg font-semibold text-red-900 text-center border-b-2">{{ service.monthlyCost }}</td>
+                        <td class="px-11 py-6 text-lg font-semibold text-red-900 text-center border-b-2">{{ service.annualCost }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-20 text-center">
+            <a routerLink="/catalog" class="bg-red-900 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg inline-block transition duration-300">Add another Service</a>
+        </div>
+        <div class="mt-4 text-center">
+            <a routerLink="/cloudform" class="bg-red-900 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg inline-block transition duration-300">Continue</a>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+

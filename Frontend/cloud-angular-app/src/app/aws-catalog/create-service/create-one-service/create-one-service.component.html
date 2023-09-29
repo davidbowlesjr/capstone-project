@@ -1,0 +1,72 @@
+
+<div *ngFor="let value of values; let i = index" class="my-4 border-solid border-2 border-slate-300 p-2 rounded-lg">
+  
+  <div class="mb-4">
+    <label class="block text-gray-700 font-semibold">Key:
+      <!-- <input (input)="onChange(values)" type="text" [(ngModel)]="value.key" #name="ngModel" name="value{{i}}"> -->
+    </label> 
+    <input (input)="onChange(values)" type="text" [(ngModel)]="value.key" #name="ngModel" name="value{{i}}" class="w-full p-2 border border-gray-300 rounded">
+  
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-gray-700 font-semibold">Select Value Type:</label>
+      <select [(ngModel)]="value.type" name="valueTypes" id="" class="w-full p-2 border border-gray-300 rounded">
+        <option value="">Select Value Type</option>
+        <option value="String">String</option>
+        <option value="Integer">Integer</option>
+        <option value="Object">Object</option>
+        <option value="Array">Array</option>
+        <option value="ValueList">ValueList</option>
+      </select>
+  
+  </div>
+
+  <div class="mb-4">
+    <label *ngIf="value.type != ''" class="block text-gray-700 font-semibold"></label> 
+      <div *ngIf="value.type == 'ValueList'" style=" padding: 15px; min-width:100px; display: inline-block" class="mb-4">
+        <app-create-options *ngIf="value.type == 'ValueList'" (answerValues)="addDefaultValue(i, $event)"></app-create-options>
+      </div>
+
+      <div class="mb-4">
+        <label *ngIf="value.type == 'String' || value.type == 'Integer'" class="block text-gray-700 font-semibold">Default Value:</label>
+        <input (input)="onChange(values)" *ngIf="value.type == 'String'|| value.type == 'Integer'" type="text" [(ngModel)]="value.defaultValue" #name="ngModel" name="value{{i}}" class="w-full p-2 border border-gray-300 rounded">
+    
+      </div>
+      
+      <div class="mb-4">
+        <label *ngIf="value.type == 'String'|| value.type == 'Integer'|| value.type == 'ValueList'" for="" class="block text-gray-700 font-semibold">Do you want a question for user input?: </label>
+        <input (click)="onChange(values)" *ngIf="value.type == 'String'|| value.type == 'Integer'|| value.type == 'ValueList'" type="checkbox" [(ngModel)]="value.hasQuestion" class="w-full p-2 border border-gray-300 rounded">
+      </div>
+
+      <div class="mb-4">
+        <label for="" *ngIf="value.hasQuestion">Enter your question here:</label>
+        <input (input)="onChange(values)" *ngIf="value.hasQuestion" type="text" [(ngModel)]="value.question" #name="ngModel" name="value{{i}}" class="w-full p-2 border border-gray-300 rounded">
+      </div>
+     
+
+      <!--         
+      <label for="" class="block text-gray-700 font-semibold"></label>
+        <input (input)="onChange(values)" *ngIf="value.hasQuestion" type="text" [(ngModel)]="value.question" #name="ngModel" name="value{{i}}">
+      -->
+     
+      <div *ngIf="value.type == 'Object'||value.type == 'Array'" class="mb-4">
+        <!-- style="border: 1px solid black; padding: 15px; min-width:100px; display: inline-block"  -->
+        <app-create-one-service *ngIf="value.type == 'Object'||value.type == 'Array'" (newItemEvent)="addDefaultValue(i, $event)"></app-create-one-service>
+      </div>
+   
+      <!-- DONE -->
+  </div>
+
+  <div class="mb-4">
+    <button *ngIf="i!=0" (click)="removeParam(i)" (click)="onChange(values)" class="btn btn-primary btn-icon flex justify-center items-center px-4 py-2 bg-red-900 hover:bg-red-700 text-white 
+    rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-300 ease-in-out">Remove Property</button>
+  </div>
+
+</div>
+<div class="mb-4">
+  
+  <button (click)="addParam()" (click)="onChange(values)" class="btn btn-primary btn-icon flex justify-center items-center my-4 px-4 py-2 bg-red-900 hover:bg-red-700 text-white 
+                        rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-300 ease-in-out">Add Property</button>
+</div>
+

@@ -1,0 +1,62 @@
+.estimate-table {
+  width: 80%;
+  margin: 20px auto;
+  border-spacing: 0;
+  border: 1px solid gray;
+  border-radius: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 20px;
+
+}
+.estimate-table th{
+  padding-top: 30px;
+  font-weight: bold;
+  
+
+}
+
+.estimate-table td {
+  
+  padding-top: 40px;
+  padding: 7px 15px;
+  font-weight: normal;
+  box-sizing: border-box; /* Ensure padding and border are included in width */
+  text-align: center;
+  vertical-align: center;
+}
+.estimate-table tbody tr:nth-child(2) td{
+  padding-bottom: 30px;
+}
+
+p {
+  font-size:x-large;
+  margin: 0px;  
+}
+
+.vl {
+  border-left: 1px solid black;
+}
+
+.estimate-table tbody tr:last-child td {
+  padding-bottom: 40px;
+
+}
+
+.estimate-table tbody tr:nth-child(2) td:first-child(){
+  text-align: center;
+}
+
+
+/*
+.estimate {
+  width: 80%;
+  margin: 20px auto;
+  border: 1px solid gray;
+  border-radius: 10px; 
+  padding: 10px; 
+  background-color: #fff; 
+  box-sizing: border-box;
+  font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+*/
+

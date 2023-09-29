@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S3 Standard Storage - AWS Service</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="min-h-screen py-8">
+
+
+<div class="container mx-auto p-4 bg-white rounded-lg shadow-lg max-w-screen-lg">
+    <div class="container mx-auto text-center">
+        <!-- Header Section -->
+        <div class="flex justify-between p-4 container mx-auto">
+            <a routerLink="/catalog" class="flex items-center text-red-900 hover:text-red-700 transition duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+            </a>
+
+
+            <p class="text-4xl font-semibold text-center text-red-900 mb-8">Elastic Compute Cloud</p>
+
+
+            <a routerLink="/finance" class="flex items-center text-red-900 hover:text-red-700 transition duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+            </a>
+        </div>
+
+
+        <!-- Service Description -->
+        <div class="container mx-auto p-1 bg-white rounded-lg max-w-screen-lg flex items-center">
+            <div class="w-1/3 p-4">
+                <img src="../../../assets/Service_Icons/ec2-small.png" alt="S3 Icon" class="mx-auto mb-4 max-w-xs h-auto">
+            </div>
+
+
+            <div class="w-2/3 p-8 text-left">
+                <p class="text-gray-600 leading-7">
+                    Amazon Elastic Compute Cloud (Amazon EC2) is a fundamental component of Amazon Web Services. 
+                    Amazon EC2 offers a flexible and scalable solution for businesses and developers, providing the infrastructure needed to deploy applications, host websites, process data, and perform various computational tasks.</p>
+                <p class="text-gray-600 leading-7 mt-4">
+                    With Amazon EC2, you have the freedom to choose from a diverse selection of virtual machine instances, catering to different computing requirements, such as CPU, memory, storage, and network performance. 
+                    Whether you need on-demand resources for quick, short-term projects or you want to optimize costs with reserved instances for long-term workloads, Amazon EC2 offers a variety of pricing options to suit your needs.
+                </p>
+            </div>
+        </div>
+
+
+        <!-- Success Message -->
+        <div *ngIf="showSuccessMessage" class="bg-green-200 text-green-800 py-2 px-4 rounded mt-4">
+            Successfully added to cart!
+        </div>
+    </div>
+
+
+    <!-- Continue Button: Only appears when submit button is clicked - (Routes to Finance page) -->
+    <div class="flex justify-center mt-4 space-x-4">
+        <button
+        *ngIf="showContinueButton"
+        type="button"
+        class="btn btn-primary btn-icon flex justify-center items-center px-4 py-2 bg-red-900 hover:bg-red-700 text-white
+        rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-300 ease-in-out"
+        routerLink="/finance"
+        >
+        <span class="mr-1">Continue</span>
+        </button>
+    </div>
+
+    <form class="questions container mx-auto p-4 bg-white rounded-lg max-w-screen-lg" [formGroup]="ec2Form" (ngSubmit)="onSubmit(ec2Form.value)">
+        <div class="mb-4">
+            <label for="location" class="block text-gray-700 font-semibold">Region:</label>
+            <select id="location" formControlName="location" class="w-full p-2 border border-gray-300 rounded">
+                <option value="">-- Select Region --</option>
+                <option value="US East (N. Virginia)">US East (N. Virginia)</option>
+                <option value="US East (Ohio)">US East (Ohio)</option>
+                <option value="US West (N. California)">US West (N. California)</option>
+                <option value="US West (Oregon)">US West (Oregon)</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="paymentOption" class="block text-gray-700 font-semibold">What payment option would you like to use?</label>
+            <select id="paymentOption" formControlName="paymentOption" class="w-full p-2 border border-gray-300 rounded">
+                <option value="">-- Select --</option>
+                <option value="On-Demand">On-Demand</option>
+                <option value="Reserved Instances">Reserved Instances</option>
+                <option value="Spot-Instances">Spot Instances</option>
+            </select>
+            <div *ngIf="paymentOption?.value === 'Reserved Instances'" class="mb-4">
+                <label for="leaseContractLength" class="block text-gray-700 font-semibold">Lease Contract Length:</label>
+                <select id="leaseContractLength" formControlName="leaseContractLength" class="w-full p-2 border border-gray-300 rounded">
+                    <option value="">-- Select --</option>
+                    <option value="1yr">1 year</option>
+                    <option value="3yr">3 years</option>
+                </select>
+            </div>
+            <div *ngIf="paymentOption?.value === 'Reserved Instances'" class="mb-4">
+                <label for="purchaseOption" class="block text-gray-700 font-semibold">Purchase Option:</label>
+                <select id="purchaseOption" formControlName="purchaseOption" class="w-full p-2 border border-gray-300 rounded">
+                    <option value="">-- Select --</option>
+                    <option value="All Upfront">All Upfront</option>
+                    <option value="Partial Upfront">Partial Upfront</option>
+                    <option value="No Upfront">No Upfront</option>
+                </select>
+            </div>
+        </div>
+        <div class="mb-4">
+            <label for="instanceType" class="block text-gray-700 font-semibold">Instance Type:</label>
+            <select id="instanceType" formControlName="instanceType" class="w-full p-2 border border-gray-300 rounded">
+                <option value="">-- Select --</option>
+                <option value="t4g.nano">t4g.nano</option>
+                <option value="t3a.nano">t3a.nano</option>
+                <option value="t3.nano">t3.nano</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="operatingSystem" class="block text-gray-700 font-semibold">Operating System:</label>
+            <select id="operatingSystem" formControlName="operatingSystem" class="w-full p-2 border border-gray-300 rounded">
+                <option value="">-- Select --</option>
+                <option value="Linux">Amazon Linux</option>
+                <option value="Windows">Windows</option>
+                <option value="Ubuntu Pro" [attr.disabled]="paymentOption?.value === 'Spot-Instances' ? true : null">Ubuntu</option>
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="imageID" class="block text-gray-700 font-semibold">Image ID:</label>
+            <input type="text" id="imageID" formControlName="imageID" class="w-full p-2 border border-gray-300 rounded">
+        </div>
+        <div class="mb-4">
+            <label for="keyName" class="block text-gray-700 font-semibold">Key Name:</label>
+            <input type="text" id="keyName" formControlName="keyName" class="w-full p-2 border border-gray-300 rounded">
+        </div>
+        <div class="mb-4">
+            <label for="securityGroups" class="block text-gray-700 font-semibold">Security Groups (separated by commas):</label>
+            <input type="text" id="securityGroups" formControlName="securityGroups" class="w-full p-2 border border-gray-300 rounded">
+        </div>
+        <!-- Button Container -->
+        <div class="flex justify-center mt-8 space-x-4">
+            <button type="submit" [disabled]="ec2Form.invalid" class="btn btn-primary btn-icon flex justify-center items-center px-4 py-2 bg-red-900 hover:bg-red-700 text-white 
+                rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-300 ease-in-out">
+              <span class="mr-1">Submit</span>
+        
+            </button>
+        </div>
+    </form>
+    </div>
+</body>
+    </html>
+    
+    
+    
+    
+    
+
+

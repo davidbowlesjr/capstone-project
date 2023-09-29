@@ -1,0 +1,136 @@
+<h1>Lambda</h1>
+<img src="assets\Service_Icons\lambda.png" alt="Description of the image">
+<p>AWS Lambda is an event-driven, serverless computing platform. It is a compute service that runs code in response to events and automatically manages the computing resources.</p>
+
+<div *ngIf="lambdaForm.invalid" class="error-message">
+  Please fill out all required fields before adding to cart.
+</div>
+
+<div *ngIf="showSuccessMessage" class="success-message">
+  Successfully added to cart!
+</div>
+<div class="page-container">
+
+<form [formGroup]="lambdaForm" (ngSubmit)="onSubmit(lambdaForm.value)">
+
+
+  <div class="container">
+    <label>Code entry point:</label>
+    <input type="text" formControlName="codeLocation">
+  </div>
+  
+  <div class="container">
+    <label>Runtime:</label>
+    <select formControlName="runtime">
+      <option value="" disabled selected></option>
+      <option *ngFor="let rt of runtimes">{{rt}}</option>
+    </select>
+  </div>
+
+
+  <div class="container">
+    <label>S3 bucket:</label>
+    <input type="text" formControlName="s3Bucket">
+  </div>
+
+
+  <div class="container">
+    <label>S3 key:</label>
+    <input type="text" formControlName="s3Key">
+  </div>
+
+
+  <div class="container">
+    <label>Role:</label>
+    <select formControlName="role">
+      <option value="" disabled selected>Please select a role</option>
+      <option *ngFor="let rt of roles">{{rt}}</option>
+    </select>    
+  </div>
+
+
+  <div class="container">
+    <label>Region:</label>
+    <select formControlName="region">
+      <option value="" disabled selected>Please select a region</option>
+      <option *ngFor="let reg of regions">{{reg}}</option>
+    </select>
+    
+  </div>
+
+
+  <div class="container">
+    <label>Architecture:</label>
+    <select formControlName="architecture">
+      <option value="" disabled selected>Please select an architecture</option>
+      <option *ngFor="let arch of architectures">{{arch}}</option>
+    </select>
+    
+  </div>
+
+
+  <div class="container">
+    <label>Number of requests:</label>
+    <input type="number" formControlName="numRequests">
+  </div>
+
+
+  <div class="container">
+    <label>Per:</label>
+    <select formControlName="requestsUnit">
+      <option value="" disabled selected>Please select a unit</option>
+      <option *ngFor="let unit of requestUnits">{{unit}}</option>
+    </select>
+    
+  </div>
+
+
+  <div class="container">
+    <label>Duration of each request (in ms):</label>
+    <input type="number" formControlName="duration">
+  </div>
+
+
+  <div class="container">
+    <label>Memory allocated:</label>
+    <input type="number" formControlName="memoryValue">
+  </div>
+
+
+  <div class="container">
+    <div class="toggle-container">
+      <input type="radio" id="memoryMB" formControlName="memoryUnit" value="MB">
+      <label for="memoryMB" class="toggle-label">MB</label>
+      <input type="radio" id="memoryGB" formControlName="memoryUnit" value="GB">
+      <label for="memoryGB" class="toggle-label">GB</label>
+    </div>
+  </div>
+
+
+  <div class="container">
+    <label>Ephemeral storage allocated:</label>
+    <input type="number" formControlName="storageValue">
+  </div>
+
+
+  <div class="container">
+    <div class="toggle-container">
+      <input type="radio" id="storageMB" formControlName="storageUnit" value="MB">
+      <label for="storageMB" class="toggle-label">MB</label>
+      <input type="radio" id="storageGB" formControlName="storageUnit" value="GB">
+      <label for="storageGB" class="toggle-label">GB</label>
+    </div>
+  </div>
+  
+  <div class="button-container">
+    <button routerLink="/catalog">Back: AWS Catalog</button>
+    <button type="submit" [disabled]="lambdaForm.invalid">Add to Cart</button>
+  </div>
+  
+</form>
+</div>
+
+
+
+
+

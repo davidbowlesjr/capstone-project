@@ -1,0 +1,53 @@
+<!-- *****OLD*****
+  <table class="estimate-table">
+  <thead>
+    <tr>
+      <th>Upfront cost</th>
+      <th>Monthly cost</th>
+      <th>Total 12 months cost</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><p>{{upfront | estimateUSD}}</p></td>
+      <td><p>{{monthly | estimateUSD}}</p></td>
+      <td class="vl"><p>{{annual | estimateUSD}}</p></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td>Includes upfront cost</td>
+    </tr>
+  </tbody>
+</table>
+-->
+
+<table class="min-w-full rounded-lg  border border-gray-300 divide-y divide-gray-200 shadow-md">
+  <thead>
+    <tr>
+      <th class="px-4 py-2 bg-gray-200 text-xl font-bold text-center">Upfront cost</th>
+      <th class="px-4 py-2 bg-gray-200 text-xl font-bold text-center">Monthly cost</th>
+      <th class="px-4 py-2 bg-gray-200 text-xl font-bold text-center">Total Annual Cost</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="px-4 py-4 text-2xl font-bold text-center">
+        <p class="text-red-900">${{ upfront | estimateUSD }}</p>
+      </td>
+      <td class="px-4 py-4 text-2xl font-bold text-center">
+        
+        <p class="text-red-900">${{ monthly | estimateUSD }}</p>
+      </td>
+      <td class="px-4 py-4 border-l border-gray-300 text-2xl font-bold text-center">
+        <p class="text-red-900 ">${{ annual | estimateUSD }}</p>
+      </td>
+    </tr>
+    <tr>
+      <td class="px-4 py-0.5"></td>
+      <td class="px-4 py-0.5"></td>
+      <td class="px-4 py-0.5 text-md font-semibold text-center">(Includes upfront cost)</td>
+    </tr>
+  </tbody>
+</table>
+

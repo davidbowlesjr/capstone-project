@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Service Catalog</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="min-h-screen flex flex-col py-8">
+
+<div class="container mx-auto">
+    <div class="flex justify-between p-4 container mx-auto">
+        <a routerLink="/" class="flex items-center text-red-900 hover:text-red-700 transition duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            
+        </a>
+
+        <p class="text-4xl font-semibold text-center text-red-800 mb-8">Select Application Type</p>
+
+        <a routerLink="/finance" class="flex items-center text-red-900 hover:text-red-700 transition duration-300">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+            </svg>
+        </a>
+    </div>
+
+
+
+<!-- SAVING THESE FOR IF WE WANT TO USE THEM FOR 'ALL SERVICES' PAGE -->
+<!-- Checkboxes to filter services by category/functionality -->
+<!-- <div class="filter-section p-4 bg-white mb-4">
+    <h2 class="text-lg font-semibold mb-2">Please select your application type: </h2>
+    <ng-container *ngFor="let category of categories">
+        <label class="inline-flex items-center mr-4">
+            <input type="checkbox" [(ngModel)]="selectedCategories[category]" />
+            <span class="ml-2">{{ category }}</span>
+        </label>
+    </ng-container>
+</div> -->
+
+    <!-- Create new service button - WILL NEED A REDESIGN ~Darrell -->
+    <div class="nav">
+        <button *ngIf = "showCreateServiceButton" class="px-4 py-2 bg-red-900 text-white rounded hover:bg-red-700 focus:outline-none" routerLink="/create-service">Create New Service</button>
+    </div>
+
+
+    <div class="grid grid-cols-5 md:grid-cols-5 lg:grid-cols-5 gap-4 mb-11">
+        <!-- Checkboxes to filter services by use case -->
+
+        <a class="service-box bg-white rounded-lg p-4 text-center hover:bg-gray-200 transition duration-300 transform hover:scale-105 hover:shadow-md shadow-sm">
+            <button (click)="onAllServicesClick()" class="focus:bg-gray-200 rounded-lg p-1.5 active:bg-gray-200">
+                <p class="text-2xl font-bold">All Services</p>
+                <p class="text-sm text-gray-400">Comprehensive cloud hosting for various web content types.</p>
+            </button>
+        </a>
+
+        <a class="service-box bg-white rounded-lg p-3 text-center hover:bg-gray-200 transition duration-300 transform hover:scale-105 hover:shadow-md shadow-sm">
+            <button (click)="onWebsiteAppClick()" class="focus:bg-gray-200 rounded-lg p-1.5 active:bg-gray-200">
+                <p class="text-2xl font-bold leading-snug">Website App</p>
+                <p class="text-sm text-gray-400">Host web content in the cloud, from simple websites to complex applications.</p>
+            </button>
+        </a>
+    
+    
+        <a class="service-box bg-white rounded-lg p-4 text-center hover:bg-gray-200 transition duration-300 transform hover:scale-105 hover:shadow-md shadow-sm">
+            <button (click)="onSinglePageAppClick()" class="focus:bg-gray-200 rounded-lg p-1.5 active:bg-gray-200">
+                <p class="text-2xl font-bold">Single Page App</p>
+                <p class="text-sm text-gray-400">Cloud hosting for seamless, interactive single-page web apps.</p>
+            </button>
+        </a>
+    
+    
+        <a class="service-box bg-white rounded-lg p-4 text-center hover:bg-gray-200 transition duration-300 transform hover:scale-105 hover:shadow-md shadow-sm">
+            <button (click)="onRestfulAPIClick()" class="focus:bg-gray-200 rounded-lg p-1.5 active:bg-gray-200">
+                <p class="text-2xl font-bold">RESTful API</p>
+                <p class="text-sm text-gray-400">Streamline web service creation and hosting for scalability.</p>
+            </button>
+        </a>
+    
+    
+        <a class="service-box bg-white rounded-lg p-4 text-center hover:bg-gray-200 transition duration-300 transform hover:scale-105 hover:shadow-md shadow-sm">
+            <button (click)="onCustomServicesClick()" class="focus:bg-gray-200 rounded-lg p-1.5 active:bg-gray-200">
+                <p class="text-2xl font-bold">Custom Services</p>
+                <p class="text-sm text-gray-400">Tailored cloud solutions to meet your unique needs.</p>
+            </button>
+        </a>
+    
+    
+        
+    </div>
+    
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- <ng-container *ngFor="let service of staticServices">
+            <a [routerLink]="service.routerLink" class="service-box bg-white rounded-lg p-4 text-center hover:bg-gray-200 transition duration-300 transform hover:scale-105 hover:shadow-md shadow-sm" *ngIf="shouldDisplayService(service)">
+                <img src="{{ service.s3ImageUrl }}" alt="{{ service.name }} Icon" class="w-16 mx-auto mb-2">
+                <p class="text-2xl font-bold">{{ service.name }}</p>
+                <p class="text-sm text-gray-500">{{ service.description }}</p>
+            </a>
+        </ng-container> -->
+
+        <!-- EC2 -->
+        <ng-container *ngIf="allServicesFlag||websiteServicesFlag||singlePageAppFlag||restfulApiFlag">
+            <a routerLink="ec2" class="service-box bg-white rounded-lg p-4 text-center hover:bg-gray-200 transition duration-300 transform hover:scale-105 hover:shadow-md shadow-sm" >
+            <button>
+            <img src="assets\Service_Icons\ec2.png" alt="EC2 Icon" class="w-16 mx-auto mb-2">
+            <p class="text-2xl font-semibold">EC2</p>
+            <p class="text-sm text-gray-500">Amazon Elastic Cloud</p>
+            <p class="text-sm text-gray-400">A web service that provides resizable compute capacity in the cloud. It is designed to make web-scale cloud computing easier for developers.</p>
+            </button>
+            </a>
+        </ng-container>
+
+        <!-- S3 -->
+        <ng-container *ngIf="allServicesFlag||websiteServicesFlag||singlePageAppFlag">
+            <a routerLink="s3" class="service-box bg-white rounded-lg p-4 text-center hover:bg-gray-200 transition duration-300 transform hover:scale-105 hover:shadow-md shadow-sm">
+            <button>
+            <img src="assets\Service_Icons\s3-new.png" alt="S3 Icon" class="w-16 mx-auto mb-2">
+            <p class="text-2xl font-semibold">S3</p>
+            <p class="text-sm text-gray-500">Amazon Simple Storage Service</p>
+            <p class="text-sm text-gray-400">An object storage service that offers industry-leading scalability, data availability, security, and performance.</p>
+            </button>    
+            </a>
+        </ng-container>
+
+
+        <!-- RDS -->
+        <ng-container *ngIf="allServicesFlag||websiteServicesFlag||restfulApiFlag">
+            <a routerLink="rds" class="service-box bg-white rounded-lg p-4 text-center hover:bg-gray-200 transition duration-300 transform hover:scale-105 hover:shadow-md shadow-sm">
+            <button>
+            <img src="assets\Service_Icons\rds.png" alt="RDS Icon" class="w-16 mx-auto mb-3">
+            <p class="text-2xl font-semibold">RDS</p>
+            <p class="text-sm text-gray-500">Amazon Relational Database Service</p>
+            <p class="text-sm text-gray-400">A managed relational database service that makes it easy to set up, operate, and scale a relational database in the cloud.</p>
+            </button>    
+            </a>
+        </ng-container>
+
+
+        <!-- Lambda -->
+        <ng-container *ngIf="allServicesFlag||websiteServicesFlag||restfulApiFlag">
+            <a routerLink="lambda" class="service-box bg-white rounded-lg p-4 text-center hover:bg-gray-200 transition duration-300 transform hover:scale-105 hover:shadow-md shadow-sm">
+            <button>
+            <img src="assets\Service_Icons\lambda.png" alt="Lambda Icon" class="w-16 mx-auto mb-4">
+            <p class="text-2xl font-semibold">Lambda</p>
+            <p class="text-sm text-gray-400">A serverless computing service that runs code in response to events and automatically manages the computing resources required by that code.</p>
+            </button>    
+            </a>
+        </ng-container>
+
+
+        <!-- DynamoDB -->
+        <ng-container *ngIf="allServicesFlag || websiteServicesFlag || restfulApiFlag">
+            <a routerLink="dynamodb" class="service-box bg-white rounded-lg p-4 text-center hover:bg-gray-200 transition duration-300 transform hover:scale-105 hover:shadow-md shadow-sm">
+            <button>
+            <img src="assets\Service_Icons\dynamodb-new.png" alt="DynamoDB Icon" class="w-16 mx-auto mb-3">
+            <p class="text-2xl font-semibold">DynamoDB</p>
+            <p class="text-sm text-gray-400">A fully managed NoSQL database service that provides fast and predictable performance with seamless scalability.</p>
+            </button>    
+            </a>
+        </ng-container>
+
+
+        <!-- CloudWatch -->
+        <ng-container *ngIf="allServicesFlag || restfulApiFlag">
+            <a routerLink="cloudwatch" class="service-box bg-white rounded-lg p-4 text-center hover:bg-gray-200 transition duration-300 transform hover:scale-105 hover:shadow-md shadow-sm">
+            <button>
+            <img src="assets\Service_Icons\cloudwatch.png" alt="CloudWatch Icon" class="w-16 mx-auto mb-3">
+            <p class="text-2xl font-semibold">CloudWatch</p>
+            <p class="text-sm text-gray-400">A monitoring and observability service that provides data and actionable insights for monitoring the performance of your applications, services, and resources.</p>
+            </button>    
+            </a>
+        </ng-container>
+
+
+        <!-- SQS -->
+        <ng-container *ngIf="allServicesFlag || websiteServicesFlag || singlePageAppFlag">
+            <a routerLink="sqs" class="service-box bg-white rounded-lg p-4 text-center hover:bg-gray-200 transition duration-300 transform hover:scale-105 hover:shadow-md shadow-sm">
+            <button>
+            <img src="assets\Service_Icons\sqs.png" alt="SQS Icon" class="w-16 mx-auto mb-2">
+            <p class="text-2xl font-semibold">SQS</p>
+            <p class="text-sm text-gray-500">Amazon Simple Queue Service</p>
+            <p class="text-sm text-gray-400">A fully managed message queuing service that enables you to decouple and scale microservices, distributed systems, and serverless applications.</p>
+            </button>    
+            </a>
+        </ng-container>
+
+
+        <!-- SNS -->
+        <ng-container *ngIf="allServicesFlag || websiteServicesFlag || singlePageAppFlag">
+            <a routerLink="sns" class="service-box bg-white rounded-lg p-4 text-center hover:bg-gray-200 transition duration-300 transform hover:scale-105 hover:shadow-md shadow-sm">
+            <button>
+            <img src="assets\Service_Icons\amazon-sns.png" alt="SNS Icon" class="w-16 mx-auto mb-7">
+            <p class="text-2xl font-semibold">SNS</p>
+            <p class="text-sm text-gray-500">Amazon Simple Notification Service</p>
+            <p class="text-sm text-gray-400">A fully managed messaging service that allows you to send messages, notifications, and alerts to distributed systems and microservices.</p>
+            </button>    
+            </a>
+        </ng-container>
+
+
+        <!-- SES -->
+        <ng-container *ngIf="allServicesFlag || websiteServicesFlag || singlePageAppFlag">
+            <a routerLink="ses" class="service-box bg-white rounded-lg p-4 text-center hover:bg-gray-200 transition duration-300 transform hover:scale-105 hover:shadow-md shadow-sm">
+            <button>
+            <img src="assets\Service_Icons\ses.png" alt="SES Icon" class="w-16 mx-auto mb-4">
+            <p class="text-2xl font-semibold">SES</p>
+            <p class="text-sm text-gray-500">Amazon Simple Email Service</p>
+            <p class="text-sm text-gray-400">A scalable and cost-effective email service that allows you to send email using a reliable and secure email platform.</p>
+            </button>    
+            </a>
+        </ng-container>
+
+
+        <!-- VPC -->
+        <ng-container *ngIf="allServicesFlag || restfulApiFlag">
+            <a routerLink="/vpc" class="service-box bg-white rounded-lg p-4 text-center hover:bg-gray-200 transition duration-300 transform hover:scale-105 hover:shadow-md shadow-sm">
+            <button>
+            <img src="assets\Service_Icons\vpc-new.png" alt="VPC Icon" class="w-16 mx-auto mb-2">
+            <p class="text-2xl font-semibold">VPC</p>
+            <p class="text-sm text-gray-500">Amazon Virtual Private Cloud</p>
+            <p class="text-sm text-gray-400">Enables you to launch Amazon Web Services (AWS) resources into a virtual network that you've defined.</p>
+            </button>    
+            </a>
+        </ng-container>
+
+        <!-- Dyanmic Services -->
+
+        <!-- NEEDS TO BE MODIFIED TO USE shouldDisplayService()  -->
+        <ng-container *ngIf="allServicesFlag || customServiceFlag"> 
+        <div *ngFor="let dynamicCatalogObject of awsCatalogService.serviceCatologObjects; let i = index">
+            <div class="flex justify-center items-center mt-4 mb-6">
+               <a routerLink="/dynamic-service" [queryParams]="{id: dynamicCatalogObject.id}" class="service-box bg-white rounded-lg p-4 text-center hover:bg-gray-200 transition duration-300 transform hover:scale-105 hover:shadow-md shadow-sm">
+                <img ngSrc="{{dynamicCatalogObject.s3ImageUrl}}" width="128" height="128" class="w-16 mx-auto mb-4">
+                <p class="text-2xl font-semibold">{{dynamicCatalogObject.name}}</p>
+                <p class="text-sm text-gray-400">{{dynamicCatalogObject.description}}</p>
+            </a>   
+        </div>
+        </div>
+    </ng-container>
+    </div>
+</div>
+
+
+</body>
+</html>
+
+  

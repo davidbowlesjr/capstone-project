@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('assets/Background-imgs/burgundy-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto max-w-md h-auto">
+        <div class="form-container">
+            <p class="text-2xl text-red-900 font-bold mb-4 text-center">Create an Account</p>
+            <form [formGroup]="registerForm" class="space-y-4">
+                <div class="mb-4">
+                    <label for="firstName" class="block text-gray-700 font-medium">First Name:</label>
+                    <input matInput placeholder="John" required type="text" name="firstName" formControlName="firstName"
+                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <br>
+                    <span class="text-red-900" *ngIf="firstName?.touched && firstName?.invalid">*First name field is required*</span>
+                </div>
+                <div class="mb-4">
+                    <label for="lastName" class="block text-gray-700 font-medium">Last Name:</label>
+                    <input matInput placeholder="Smith" required type="text" name="lastName" formControlName="lastName"
+                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <br>
+                    <span class="text-red-900" *ngIf="lastName?.touched && lastName?.invalid">*Last name field is required*</span>
+                </div>
+                <div class="mb-4">
+                    <label for="orgName" class="block text-gray-700 font-medium">Organization Name (Optional):</label>
+                    <input matInput placeholder="Lincoln Financial" type="text" name="orgName" formControlName="orgName"
+                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <br>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 font-medium">Email:</label><br>
+                    <input matInput placeholder="johnsmith@gmail.com" required type="text" name="email" formControlName="email"
+                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <br>
+                    <span class="text-red-900" *ngIf="email?.touched && email?.invalid">*Please enter a valid email address*</span>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="block text-gray-700 font-medium">Password:</label><br>
+                    <input matInput placeholder="*******" required type="password" name="password" formControlName="password"
+                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <br>
+                    <span class="text-red-900" *ngIf="password?.touched && password?.invalid">*Password field is required*</span>
+                </div>
+                <div class="mb-4">
+                    <label for="passwordConfirm" class="block text-gray-700 font-medium">Confirm Password:</label><br>
+                    <input matInput placeholder="******" required type="password" name="passwordConfirm" formControlName="passwordConfirm"
+                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <br>
+                    <span class="text-red-900" *ngIf="registerForm.get('passwordConfirm')?.touched && registerForm.get('passwordConfirm')?.invalid">*Please re-enter your password*</span>
+                </div>
+                <div class="flex justify-center">
+                    <button mat-raised-button color="primary" [disabled]="registerForm.invalid"
+                        class="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+                        type="submit" (click)="onRegisterClick()">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Service</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class=" min-h-screen py-8">
+  
+        
+<div class="container mx-auto p-4 bg-white rounded-lg shadow-lg max-w-screen-lg">
+        <div class="container mx-auto text-center">        
+                <!-- Header Section -->
+                <div class="flex justify-between p-4 container mx-auto">
+                        <a routerLink="/catalog" class="flex items-center text-red-900 hover:text-red-700 transition duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                                </svg>
+                        </a>
+                
+
+                        <p class="text-4xl font-semibold text-center text-red-900 mb-8">Create a new Service</p>
+
+                        <a routerLink="/finance" class="flex items-center text-red-900 hover:text-red-700 transition duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                        </a>
+                </div>
+
+                <!-- Service Description -->
+                <div class="container mx-auto p-1 bg-white rounded-lg max-w-screen-lg flex items-center">
+                        <div class="w-1/3 p-4">
+                                <img src="../../../assets/cloud-icon.png" alt="S3 Icon" class="mx-auto mb-4 max-w-xs h-auto">
+                        </div>
+
+                        <div class="w-2/3 p-8 text-left">
+                                <p class="text-gray-600 leading-7">
+                                        Create your desired service with ease! Simply add the resources that are required for your service and it will be added to your catalog.
+                                </p>
+                                
+                        </div>
+                </div>
+
+        </div>
+
+        <div class="page-container mx-auto mt-8 p-4 bg-white rounded-lg shadow-lg">
+                <h2 class="text-lg text-red-900 font-semibold mb-4">Service Settings</h2>
+                        
+
+                <!-- Service Name -->
+                <div class="mb-4">
+                        <label for="serviceName" class="block text-gray-700 font-semibold">Name of Service:</label>
+                                <input type="text" [(ngModel)]="serviceName" #name="ngModel"
+                                class="w-full p-2 border border-gray-300 rounded" required>
+                                <!-- to implement with formGroup:
+                                <input type="text" id="bucketName" formControlName="bucketName"
+                                class="w-full p-2 border border-gray-300 rounded" required> -->
+                                
+                </div>
+
+                <!-- Upload an Image -->
+                <div class="mb-4">
+                        <!-- TODO: UPLOAD Image Functionality -->
+                        <label for="serviceName" class="block text-gray-700 font-semibold">Upload Image</label>
+                        <input type="file" (change)="onFileSelected($event)">
+                </div>
+
+                <!-- Write a description -->
+                <div class="mb-4">
+                        <label for=""class="block text-gray-700 font-semibold">Write a description about the service:</label>
+                        <input type="text" [(ngModel)]="serviceDescription" #name="ngModel" class="w-1/2 p-2 border border-gray-300 rounded mr-2" required>
+                        
+                </div>
+
+                <!-- Add a Resource Dynamic Fields -->
+                <div class="mb-4">
+                        <div *ngFor="let resource of _resources; let i = index">
+                                <div class="mb-4">
+                                        <label class="block text-gray-700 font-semibold">Resource Name:</label>
+                                        <input type="text" [(ngModel)]="resource.name" #name="ngModel" name="value{{i}}" class="w-1/2 p-2 border border-gray-300 rounded mr-2" required>
+                                </div>
+                                <div class="mb-4">
+                                        <label class="block text-gray-700 font-semibold">AWS Service Name:</label>   
+                                        <input type="text" [(ngModel)]="resource.serviceType" #name="ngModel" name="value{{i}}" class="w-1/2 p-2 border border-gray-300 rounded mr-2" required>  
+                                </div>
+                                <div class="mb-4">
+                                <!-- TODO: Fix UI for create-one-service -->
+                                        
+                                        <app-create-one-service (newItemEvent)="addService(i, $event)"></app-create-one-service>
+                                   
+                                        
+                                </div>
+                                <div class="mb-4">
+                                        <button (click)="removeParam(resource)" class="btn btn-primary btn-icon flex justify-center items-center px-4 py-2 bg-red-900 hover:bg-red-700 text-white 
+                                        rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-300 ease-in-out">Remove Resource</button>
+                                </div>
+                        </div>
+
+                </div>       
+                        
+                <!-- Add Resource Button -->
+                <div class="mb-4">  
+                        <button (click)="addParam()" class="btn btn-primary btn-icon flex justify-center items-center px-4 py-2 bg-red-900 hover:bg-red-700 text-white 
+                        rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-300 ease-in-out">Add Resource</button>
+                </div>
+
+                <div class="mb-4">  
+                        <label class="text-lg text-red-900 font-semibold mb-4">Result</label>
+                        <p *ngIf="_resources.length" class="text-gray-600 leading-7 mt-4">{{resources}}</p>
+                        <!-- <button (click)="convertToCloudFormationTemplate()">SET</button> -->
+                </div>
+                <div class="mb-4">
+                        <button (click)="validateCloudTemplate()" class="btn btn-primary btn-icon flex justify-center items-center px-4 py-2 bg-red-900 hover:bg-red-700 text-white 
+                        rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-300 ease-in-out">VALIDATE</button>
+                </div>
+                        <p *ngIf="cloudFormationJson.length" class="text-gray-600 leading-7 mt-4">{{cloudFormationString}}</p>
+
+                        <p *ngIf="service.invalidTemplateMessage && !service.validTemplate" class="text-lg text-red-900 font-semibold mb-4">Validation Failed: {{service.invalidTemplateMessage}}</p>
+                        
+                        <p *ngIf="service.validTemplate" class="text-lg text-red-900 font-semibold mb-4">Validation Success!</p>
+                        
+                <div class="mb-4">
+                        <button (click)="submitService()" class="btn btn-primary btn-icon flex justify-center items-center px-4 py-2 bg-red-900 hover:bg-red-700 text-white 
+                        rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-300 ease-in-out"
+                        >SUBMIT</button>
+
+                        <p *ngIf="service.saveServiceError && !service.validTemplate" class="text-lg text-red-900 font-semibold mb-4">Submission Failed: {{service.saveServiceError}}</p>
+                </div>
+        </div>
+                        
+                        
+
+                
+</div>
+
+</body>
+</html>

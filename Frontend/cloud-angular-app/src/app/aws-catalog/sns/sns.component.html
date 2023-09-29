@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNS - AWS Service</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="min-h-max py-8">
+
+
+<div class="container mx-auto p-4 bg-white rounded-lg shadow-lg max-w-screen-lg">
+    <div class="container mx-auto text-center">
+        <div class="flex justify-between p-4 container mx-auto">
+            <a routerLink="/catalog" class="flex items-center text-red-900 hover:text-red-700 transition duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                
+            </a>
+    
+            <p class="text-4xl font-semibold text-center text-red-900 mb-8">Simple Notification Service</p>
+    
+            <a routerLink="/finance" class="flex items-center text-red-900 hover:text-red-700 transition duration-300">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+            </a>
+        </div>
+
+            <div class="container mx-auto p-1 bg-white rounded-lg max-w-screen-lg flex items-center">
+            <div class="w-1/3 p-4">
+                <img src="assets\Service_Icons\sns.png" alt="SQS Icon" class="mx-auto mb-4 max-w-xs h-auto">
+            </div>
+
+            <div class="w-2/3 p-8 text-left">
+                <p class="text-gray-600 leading-7">
+                    Amazon Simple Notification Service (SNS) is a fully managed messaging service that enables users to send notifications and messages to a variety of recipients or endpoints.
+                </p>
+                <p class="text-gray-600 leading-7 mt-4">
+                    With SNS, you can easily orchestrate and automate the dissemination of critical information, alerts, and updates to a diverse audience. Whether you need to notify users about system events, broadcast promotional offers, or deliver time-sensitive alerts, SNS simplifies the process and ensures that messages are delivered reliably.
+                </p>
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        <div *ngIf="showSuccessMessage" class="bg-green-200 text-green-800 py-2 px-4 rounded mt-4">
+            Successfully added to cart!
+        </div>
+    </div>
+
+     <!-- Continue Button: Only appears when submit button is clicked - (Routes to Finance page) -->
+     <div class="flex justify-center mt-4 space-x-4">
+        <button
+        *ngIf="showContinueButton"
+        type="button"
+        class="btn btn-primary btn-icon flex justify-center items-center px-4 py-2 bg-red-900 hover:bg-red-700 text-white
+        rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-300 ease-in-out"
+        routerLink = '/finance'
+        >
+        <span class="mr-1">Continue</span>
+        </button>
+    </div>
+
+
+  
+    <div class="page-container mx-auto mt-8 p-4 bg-white rounded-lg">
+
+    <form [formGroup]="snsForm" (ngSubmit)="onSubmit(snsForm.value)">
+
+        <!-- Region -->
+        <div class="mb-4">
+            <label for="" class="block text-gray-700 font-semibold">Select Region:</label>
+            <select name="" id="" formControlName="region" 
+            class="w-full p-2 border border-gray-300 rounded" required>
+                <option value="">-- Select Region --</option>
+                <option value="US_EAST_1">US_EAST_1</option>
+                <option value="US_WEST_1">US_WEST_1</option>
+            </select>
+        </div>
+            <div class="mb-4">
+                <label for="" class="block text-gray-700 font-semibold">SNS Name:</label>
+                <input type="text" formControlName="topicName"
+                class="w-full p-2 border border-gray-300 rounded" required>
+            </div> 
+            <div class="mb-4">
+                <label for="" class="block text-gray-700 font-semibold">Select Protocol:</label>
+                <select name="" id="" formControlName="protocol"
+                class="w-full p-2 border border-gray-300 rounded" required>
+                    <option value="">-- Select --</option>
+                    <option value="email">Email</option>
+                    <option value="phone">Phone</option>
+                    <option value="SQS Queue">SQS Queue</option>
+                </select>
+        </div>
+        <!-- Endpoint Value-->
+        <div class="mb-4">
+            <label for="" class="block text-gray-700 font-semibold">Enter Endpoint Value:</label>
+            <input type="text" formControlName="endpoint"
+            class="w-full p-2 border border-gray-300 rounded" required>
+        </div> 
+
+
+        <!-- Requests -->
+        <div class="mb-4 flex items-center">
+            <label for="" class="block w-1/3 text-gray-700 font-semibold">Requests:</label>
+            <div class="w-2/3 flex items-center">
+                <input type="number" formControlName="requests" class="w-1/2 p-2 border border-gray-300 rounded mr-2" required>
+                <label for="" class="block  text-gray-700 font-semibold mr-2">Amount:  </label>
+                <select formControlName="requestUnits" class="w-1/2 p-2 border border-gray-300 rounded" required>
+                    <option value="">-- Select --</option>
+                    <option value="perMonth">Per Month</option>
+                    <option value="millionsPerMonth">Millions Per Month</option>
+                </select>
+            </div>
+        </div>
+
+
+        <!-- HTTP/HTTPS Notifications -->
+        <div class="mb-4 flex items-center">
+            <label for="" class="block w-1/3 text-gray-700 font-semibold">HTTP/HTTPS Notifications:</label>
+            <div class="w-2/3 flex items-center">
+                <input type="number" formControlName="httpNotifications" class="w-1/2 p-2 border border-gray-300 rounded mr-2" required>
+                <label for="" class="block  text-gray-700 font-semibold mr-2">Amount:  </label>
+                <select formControlName="httpNotificationUnits" class="w-1/2 p-2 border border-gray-300 rounded" required>
+                    <option value="">-- Select --</option>
+                    <option value="perMonth">Per Month</option>
+                    <option value="millionsPerMonth">Millions Per Month</option>
+                </select>
+            </div>
+        </div>
+
+
+        <!-- EMAIL/EMAIL-JSON Notifications -->
+        <div class="mb-4 flex items-center">
+            <label for="" class="block w-1/3 text-gray-700 font-semibold">EMAIL/EMAIL-JSON Notifications:</label>
+            <div class="w-2/3 flex items-center">
+                <input type="number" formControlName="emailNotifications" class="w-1/2 p-2 border border-gray-300 rounded mr-2" required>
+                <label for="" class="block  text-gray-700 font-semibold mr-2">Amount:  </label>
+                <select formControlName="emailNotificationUnits" class="w-1/2 p-2 border border-gray-300 rounded" required>
+                    <option value="">-- Select --</option>
+                    <option value="perMonth">Per Month</option>
+                    <option value="millionsPerMonth">Millions Per Month</option>
+                </select>
+            </div>
+        </div>
+
+
+        <!-- SQS Notifications -->
+        <div class="mb-4 flex items-center">
+            <label for="" class="block w-1/3 text-gray-700 font-semibold">SQS Notifications:</label>
+            <div class="w-2/3 flex items-center">
+                <input type="number" formControlName="sqsNotifications" class="w-1/2 p-2 border border-gray-300 rounded mr-2" required>
+                <label for="" class="block  text-gray-700 font-semibold mr-2">Amount:  </label>
+                <select formControlName="sqsNotificationUnits" class="w-1/2 p-2 border border-gray-300 rounded" required>
+                    <option value="">-- Select --</option>
+                    <option value="perMonth">Per Month</option>
+                    <option value="millionsPerMonth">Millions Per Month</option>
+                </select>
+            </div>
+        </div>
+
+
+        <!-- Inbound Data Transfer -->
+        <div class="mb-4 flex items-center">
+            <label for="" class="block w-1/3 text-gray-700 font-semibold">Inbound Data Transfer:</label>
+            <div class="w-2/3 flex items-center">
+                <input type="number" formControlName="inboundDataTransfer" class="w-1/2 p-2 border border-gray-300 rounded mr-2" required>
+                <label for="" class="block w-1/12 text-gray-700 font-semibold mr-2">Units:  </label>
+                <select formControlName="inboundUnits" class="w-1/2 p-2 border border-gray-300 rounded" required>
+                    <option value="">-- Select Units --</option>
+                    <option value="GB">GB Per Month</option>
+                    <option value="TB">TB Per Month</option>
+                </select>
+            </div>
+        </div>
+
+
+        <!-- Outbound Data Transfer -->
+        <div class="mb-4 flex items-center">
+            <label for="" class="block w-1/3 text-gray-700 font-semibold">Outbound Data Transfer:</label>
+            <div class="w-2/3 flex items-center">
+                <input type="number" formControlName="outboundDataTransfer" class="w-1/2 p-2 border border-gray-300 rounded mr-2" required>
+                <label for="" class="block w-1/12 text-gray-700 font-semibold mr-2">Units:  </label>
+                <select formControlName="outboundUnits" class="w-1/2 p-2 border border-gray-300 rounded" required>
+                    <option value="">-- Select Units --</option>
+                    <option value="GB">GB Per Month</option>
+                    <option value="TB">TB Per Month</option>
+                </select>
+            </div>
+        </div>
+
+          <!-- Button Container -->
+          <div class="flex justify-center mt-8 space-x-4">
+            <button type="submit" [disabled]="snsForm.invalid" class="btn btn-primary btn-icon flex justify-center items-center px-4 py-2 bg-red-900 hover:bg-red-700 text-white 
+                rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-300 ease-in-out">
+              <span class="mr-1">Submit</span>
+        
+            </button>
+

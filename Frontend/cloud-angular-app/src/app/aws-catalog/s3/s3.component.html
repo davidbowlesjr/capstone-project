@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S3 Standard Storage - AWS Service</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class=" min-h-screen py-8">
+
+
+<div class="container mx-auto p-4 bg-white rounded-lg shadow-lg max-w-screen-lg">
+    <div class="container mx-auto text-center">
+        <!-- Header Section -->
+        <div class="flex justify-between p-4 container mx-auto">
+            <a routerLink="/catalog" class="flex items-center text-red-900 hover:text-red-700 transition duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+            </a>
+
+
+            <p class="text-4xl font-semibold text-center text-red-900 mb-8">S3 Standard Storage</p>
+
+
+            <a routerLink="/finance" class="flex items-center text-red-900 hover:text-red-700 transition duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                </svg>
+            </a>
+        </div>
+
+
+        <!-- Service Description -->
+        <div class="container mx-auto p-1 bg-white rounded-lg max-w-screen-lg flex items-center">
+            <div class="w-1/3 p-4">
+                <img src="../../../assets/Service_Icons/s3.png" alt="S3 Icon" class="mx-auto mb-4 max-w-xs h-auto">
+            </div>
+
+
+            <div class="w-2/3 p-8 text-left">
+                <p class="text-gray-600 leading-7">
+                    S3 Standard Storage is the default storage class in Amazon S3. It is specifically engineered to store data redundantly across multiple devices distributed across various facilities, 
+                    ensuring both durability and high availability. This storage class is well-suited for a wide range of applications and use cases, offering reliability and scalability for your data storage needs.                </p>
+                <p class="text-gray-600 leading-7 mt-4">
+                    With S3 Standard, you can confidently store your data in the cloud, knowing that it will be safeguarded against data loss and accessible whenever you need it.
+                     Whether you're running a small startup or a large enterprise,
+                     S3 Standard Storage ensures that your data is protected and ready to support your business's growth and innovation.
+                </p>
+            </div>
+        </div>
+
+
+        <!-- Success Message -->
+        <div *ngIf="showSuccessMessage" class="bg-green-200 text-green-800 py-2 px-4 rounded mt-4">
+            Successfully added to cart!
+        </div>
+    </div>
+
+
+    <!-- Continue Button: Only appears when submit button is clicked - (Routes to Finance page) -->
+    <div class="flex justify-center mt-4 space-x-4">
+        <button
+        *ngIf="showContinueButton"
+        type="button"
+        class="btn btn-primary btn-icon flex justify-center items-center px-4 py-2 bg-red-900 hover:bg-red-700 text-white
+        rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-300 ease-in-out"
+        routerLink="/finance"
+        >
+        <span class="mr-1">Continue</span>
+        </button>
+    </div>
+
+
+    <div class="page-container mx-auto mt-8 p-4 bg-white rounded-lg">
+
+
+        <form [formGroup]="s3Form" (ngSubmit)="onSubmit(s3Form.value)">
+            <h2 class="text-lg text-red-900 font-semibold mb-4">Service Settings</h2>
+
+
+            <!-- Bucket Name -->
+            <div class="mb-4">
+                <label for="bucketName" class="block text-gray-700 font-semibold">Bucket Name:</label>
+                <input type="text" id="bucketName" formControlName="bucketName"
+                       class="w-full p-2 border border-gray-300 rounded" required>
+            </div>
+
+
+            <!-- Please choose your AWS region -->
+            <div class="mb-4">
+                <label for="region" class="block text-gray-700 font-semibold">AWS Region:</label>
+                <select name="region" id="region" formControlName="region"
+                        class="w-full p-2 border border-gray-300 rounded">
+                    <option value="">-- Select Region --</option>
+                    <option value="us-east-1">US East 1 (N. Virginia)</option>
+                    <option value="us-east-2">US East 2 (Ohio)</option>
+                    <option value="us-west-1">US West 1 (N. California)</option>
+                    <option value="us-west-2">US West 2 (Oregon)</option>
+                </select>
+            </div>
+
+            <!-- Desired Storage -->
+            <div class="mb-4">
+                <label for="storageAmount" class="block text-gray-700 font-semibold">Desired storage:</label>
+                <div class="flex items-center">
+                    <input type="number" id="storageAmount" formControlName="storageAmount" class="w-1/2 p-2 border border-gray-300 rounded mr-2">
+                    <label for="storageUnits" class="block text-gray-700 font-semibold mr-2">Units:</label>
+                    <select id="storageUnits" name="storageUnits" formControlName="storageUnits" class="w-1/2 p-2 border border-gray-300 rounded">
+                        <option value="">-- Select Units --</option>
+                        <option value="GB">GB per month</option>
+                        <option value="TB">TB per month</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <!-- How will data be moved into S3 Standard? -->
+            <div class="mb-4">
+                <label for="moveType" class="block text-gray-700 font-semibold">How will data be moved into S3 Standard?</label>
+                <select name="moveType" id="moveType" formControlName="moveType"
+                        class="w-full p-2 border border-gray-300 rounded">
+                    <option value="already-stored">The specified amount of data is already stored in S3 Standard</option>
+                    <option value="not-already-stored">PUT, COPY, POST requests to S3 Standard</option>
+                </select>
+            </div>
+
+
+            <!-- S3 Standard Average Object Size (Conditional) -->
+            <div class="mb-4" *ngIf="moveType!.value == 'not-already-stored'">
+                <label for="averageObjSize" class="block text-gray-700 font-semibold">S3 Standard Average Object Size:</label>
+                <div class="flex items-center">
+                    <input type="number" id="averageObjSize" formControlName="averageObjSize" class="w-1/2 p-2 border border-gray-300 rounded mr-2">
+                    <label for="averageObjSizeUnits" class="block text-gray-700 font-semibold mr-2">Units:</label>
+                    <select id="averageObjSizeUnits" name="averageObjSizeUnits" formControlName="averageObjSizeUnits" class="w-1/2 p-2 border border-gray-300 rounded">
+                        <option value="bytes">Bytes</option>
+                        <option value="KB">KB</option>
+                        <option value="MB">MB</option>
+                    </select>
+                </div>
+            </div>
+
+
+
+            <!-- PUT, COPY, POST requests to S3 Standard -->
+            <div class="mb-4">
+                <label for="numRequests" class="block text-gray-700 font-semibold">PUT, COPY, POST requests to S3 Standard:</label>
+                <input type="number" id="numRequests" formControlName="numRequests"
+                       class="w-full p-2 border border-gray-300 rounded">
+            </div>
+
+
+            <!-- GET, SELECT, and all other requests from S3 Standard -->
+            <div class="mb-4">
+                <label for="miscRequests" class="block text-gray-700 font-semibold">GET, SELECT, and all other requests from S3 Standard:</label>
+                <input type="number" id="miscRequests" formControlName="miscRequests"
+                       class="w-full p-2 border border-gray-300 rounded">
+            </div>
+
+
+            <!-- Data to be returned by S3 Select -->
+            <div class="mb-4">
+                <label for="returnedByS3SelectNum" class="block text-gray-700 font-semibold">Data to be returned by S3 Select:</label>
+                <div class="flex items-center">
+                    <input type="number" id="returnedByS3SelectNum" formControlName="returnedByS3SelectNum" class="w-1/2 p-2 border border-gray-300 rounded mr-2">
+                    <label for="returnedByS3SelectUnits" class="block text-gray-700 font-semibold mr-2">Units:</label>
+                    <select id="returnedByS3SelectUnits" name="returnedByS3SelectUnits" formControlName="returnedByS3SelectUnits" class="w-1/2 p-2 border border-gray-300 rounded">
+                        <option value="">-- Select Units --</option>
+                        <option value="GB">GB per month</option>
+                        <option value="TB">TB per month</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <!-- Data to be scanned by S3 Select -->
+            <div class="mb-4">
+                <label for="scannedByS3SelectNum" class="block text-gray-700 font-semibold">Data to be scanned by S3 Select:</label>
+                <div class="flex items-center">
+                    <input type="number" id="scannedByS3SelectNum" formControlName="scannedByS3SelectNum" class="w-1/2 p-2 border border-gray-300 rounded mr-2">
+                    <label for="scannedByS3SelectUnits" class="block text-gray-700 font-semibold mr-2">Units:</label>
+                    <select id="scannedByS3SelectUnits" name="scannedByS3SelectUnits" formControlName="scannedByS3SelectUnits" class="w-1/2 p-2 border border-gray-300 rounded">
+                        <option value="">-- Select Units --</option>
+                        <option value="GB">GB per month</option>
+                        <option value="TB">TB per month</option>
+                    </select>
+                </div>
+            </div>
+
+              <!-- Button Container -->
+              <div class="flex justify-center mt-8 space-x-4">
+                <button type="submit" [disabled]="s3Form.invalid" class="btn btn-primary btn-icon flex justify-center items-center px-4 py-2 bg-red-900 hover:bg-red-700 text-white 
+                    rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-300 ease-in-out">
+                  <span class="mr-1">Submit</span>
+            
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+

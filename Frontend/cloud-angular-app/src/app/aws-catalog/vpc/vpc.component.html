@@ -1,0 +1,49 @@
+<h1>VPC</h1>
+<img src="assets\Service_Icons\vpc.png" alt="VPC Image" id="awsImage">
+<p>Amazon Virtual Private Cloud (Amazon VPC) lets you provision a logically isolated section of the AWS Cloud where you can launch AWS resources in a virtual network that you define.</p>
+
+<form [formGroup]="vpcForm" (ngSubmit)="onSubmit()">
+    <div class="container">
+        <label for="">IPv4 network range for VPC (ex: 10.0.0.0/16)</label>
+        <input type="text" formControlName="networkRange">
+    </div>
+    <div class="container">
+        <label for="">Number of Site-to-Site VPN Connections: </label>
+        <input type="number" formControlName="numSiteToSiteVpns">
+    </div>
+    <div class="container">
+        <label for="">Average duration for each connection: </label>
+        <input type="number" formControlName="avgDurationSiteToSiteVpns">
+        <select formControlName="avgDurationSiteToSiteVpnsUnits">
+            <option value="day">Hours per Day</option>
+            <option value="week">Hours per Week</option>
+            <option value="month">Hours per Month</option>
+        </select>
+    </div>
+    <div class="container">
+        <label for="">Number of subnet associations: </label>
+        <input type="number" formControlName="numSubnets">
+    </div>
+    <div class="container">
+        <label for="">Number of active Client VPN connections (or users): </label>
+        <input type="number" formControlName="numActiveVpns">
+        <select formControlName="numActiveVpnsUnits">
+            <option value="day">Per Day</option>
+        </select>
+    </div>
+    <div class="container">
+        <label for="">Average duration for each connection: </label>
+        <input type="number" formControlName="avgActiveVpnsDuration">
+        <select formControlName="avgActiveVpnsDurationUnits">
+            <option value="day">Hours per Day</option>
+            <option value="week">Hours per Week</option>
+            <option value="month">Hours per Month</option>
+        </select>
+    </div>
+    <div class="container">
+        <label for="">Working days per month: </label>
+        <input type="number" formControlName="numWorkingDays">
+    </div>
+    <button type="submit" [disabled]="vpcForm.invalid">Add to Cart</button>
+</form>
+<button routerLink="/catalog">Back: AWS Catalog</button>
